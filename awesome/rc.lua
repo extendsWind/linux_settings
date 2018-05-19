@@ -14,6 +14,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -41,7 +42,19 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+--beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
+
+---------------------------------------
+-- my theme settings 
+beautiful.border_width = 0
+beautiful.systray_icon_spacing = 1
+beautiful.tasklist_disable_task_name = true
+beautiful.tasklist_align = "center"
+beautiful.wibar_height = 18
+--beautiful.tasklist_plain_task_name = true
+
+---------------------------------------
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xfce4-terminal"
@@ -62,11 +75,11 @@ awful.layout.layouts = {
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
+    awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
+    awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
@@ -101,9 +114,16 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end}
 }
 
+-- my power menu
+my_power_menu = {
+  { "shutdown", "i3exit shutdown"},
+}
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
+                                    { "power", my_power_menu},
+                                    { "open terminal", terminal },
+                                    { "suspend", "i3exit suspend"}
+                                 }
                         })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
@@ -118,7 +138,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock("  %a-%b-%d %H:%M")
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -187,7 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     local names = { "paper", "www", "programming", "vimb", "5", "6", "7", "8", "9" }
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.floating, l.floating, l.tile, l.fair, l.max,
+    local layouts = { l.tile, l.fair, l.tile, l.fair, l.max,
     l.floating, l.tile.left, l.floating, l.floating }
     awful.tag(names, s, layouts)
 
@@ -210,24 +231,30 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
+    -- system tray
+    s.mySystray = wibox.widget.systray()
+    s.mySystray:set_base_size(17)
+    
+
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
-        },
-    }
+      expand = "none",
+      layout = wibox.layout.align.horizontal,
+      { -- Left widgets
+      layout = wibox.layout.fixed.horizontal,
+      mylauncher,
+      s.mytaglist,
+      s.mypromptbox, -- 命令行盒子 ctrl+r
+    },
+    s.mytasklist, -- Middle widget  任务栏中窗口的图标和名称
+    { -- Right widgets
+    layout = wibox.layout.fixed.horizontal,
+    wibox.widget.systray(),
+    --mykeyboardlayout,
+    mytextclock,
+    s.mylayoutbox,
+  },
+}
 end)
 -- }}}
 
@@ -342,17 +369,20 @@ globalkeys = gears.table.join(
 
 
 
-    -- My Setting
+    -- My Key Setting
     --
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
-    awful.key({"Mod1"}, "F2", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Mod1"}, "F2", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({ modkey }, "e", function() awful.spawn("thunar") end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
-    awful.key({ modkey}, "[", function() awful.spawn("xdotool click 4") end, {description = "move up", group = "MySettings"}),
-    awful.key({ modkey}, "]", function() awful.spawn("xdotool click 5") end, {description = "move down", group = "MySettings"}),
-    awful.key({ modkey}, "Insert", function() awful.spawn.with_shell("xprop > ~/aa.txt") end, {description = "xprop(get window class)", group = "MySettings"})
-
+--    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
+--    awful.key({ modkey}, "]", function() awful.spawn("python /home/fly/.config/awesome/keydown.py ") end, {description = "move up", group = "MySettings"}),
+--    awful.key({ modkey}, "]", function() awful.spawn("xdotool click 5") end, {description = "move down", group = "MySettings"}),
+    awful.key({ modkey}, "Insert", function() awful.spawn.with_shell("xprop > ~/aa.txt") end, {description = "xprop(get window class) to ~/aa.txt", group = "MySettings"}),
+    awful.key({ "Control"}, "`", function() awful.spawn.with_shell("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "screenshooter", group = "MySettings"}),
+    awful.key({ modkey}, "Up", function() awful.spawn.with_shell("pulseaudio-ctl up") end, {description = "audio volume up", group = "MySettings"}),
+    awful.key({ modkey}, "Down", function() awful.spawn.with_shell("pulseaudio-ctl down") end, {description = "audio volume down", group = "MySettings"})
 )
 
 clientkeys = gears.table.join(
@@ -399,7 +429,32 @@ clientkeys = gears.table.join(
         {description = "(un)maximize horizontally", group = "client"}),
 
         -- MySettings-client
-    awful.key({ "Mod1"}, "F4", function (c) c:kill() end, {description = "close", group = "MySettings-client"})
+    awful.key({ "Mod1"}, "F4", function (c) c:kill() end, {description = "close", group = "MySettings-client"}),
+    
+    awful.key({ modkey , "Mod1" }, "h", 
+    function (c) 
+      local sw = c.screen.geometry.width
+      if c.x ~= 0 then 
+        if c.x-30 > 0 then c:relative_move(-30,0,30,0) end
+      else 
+        if c.width-30 > 0 then c:relative_move(0,0,-30, 0) end
+      end
+    end, 
+    {description = "left move window", group = "MySettings-client"}),
+
+    awful.key({ modkey , "Mod1" }, "l", 
+    function (c) 
+      local sw = c.screen.geometry.width
+      if c.x ~= 0 then 
+        if c.x+30 < sw then c:relative_move(30,0,-30,0) end
+      else 
+        if c.width+30 < sw then c:relative_move(0,0,30, 0) end
+      end
+    end, 
+    {description = "right move window", group = "MySettings-client"})
+
+
+ 
 )
 
 -- Bind all key numbers to tags.
@@ -468,6 +523,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
+                     -- 此处会导致qq表情窗口的闪退
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
@@ -515,17 +571,48 @@ awful.rules.rules = {
     --   properties = { screen = 1, tag = "2" } },
     --
     
-    -- My rules
+    -- my rules
     --
-    {--wine
-      rule = {class = "Wine"}, properties = {floating = true, sticky = true}
+    {
+      rule = {class = "Wine"},
+      except = {name = "?*"},
+      properties = {focusable = false, floating = true, sticky = true},
+     -- callback = function (c)
+    --naughty.notify({ preset = naughty.config.presets.critical,
+     --                title = c.name.."--"..c.class.."--"..c.type,
+      --               text = awesome.startup_errors })
+      --             end
+
+      -- 能让qq选表情的消失好一点
     },
+    {--wine
+      rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
+    },
+    {-- 快捷键输入表情
+      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
+    },
+    {-- netease cloud music
+      rule = {class = "netease-cloud-music"}, properties = {floating = true, sticky = true}
+    }, 
     {--pomodoro_tk
-      rule = {class = "Tk"}, properties = {floating = true, sticky = true}
+      rule = {class = "Tk"}, properties = {floating = true, sticky = true, skip_taskbar=true, focusable=false -- super+j/k will not get the focus
+    }
     },
     {--vivaldi
       rule = {class = "Vivaldi"}, properties = {tag = "www"}
-    }
+    },
+    {--Master PDF Editor
+      rule = {class = "Master PDF Editor"},
+      callback = function (c)
+      local swidth = c.screen.geometry.width
+      local xRatio = 0.3
+      c:geometry({x = swidth*xRatio, y=0, width = swidth*(1-xRatio)})
+      end
+    },
+    {--xfce4-terminal-drop-down
+    rule = {role = "xfce4-terminal-dropdown"},properties = {floating = true, sticky = true}
+
+  }
 }
 -- }}}
 
@@ -622,9 +709,25 @@ awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 --Control	Also called CTRL on some keyboards
 
 -- 窗口上方的有个titlebar，设置为true时会显示。
--- 有窗口名称和system tray的是wibar
+-- 有窗口名称和system tray的是wibar，中间显示各个窗口的是tasklist
 --
 -- awful.key 设置各种快捷键
 -- rules 设置各个窗口的出现规则
 --
 -- focus follows mouse.搜索这一段能够处理是否焦点跟随鼠标
+--
+
+-- lua  .和:    x:bar(3,4)should be the same as x.bar(x,3,4).
+-- 
+
+
+--awful.ewmh.add_activate_filter(function(c, source)
+--  if ( source=="autofocus.check_focus" or source =="client.focus.bydirection"
+--    ) and  c.class == "Wine" then
+--    return false
+--  end
+--end) 
+
+-- Active window information:
+-- Title: 'b'FaceSelector''
+-- Class: 'tim.exe.Wine'

@@ -11,3 +11,7 @@ run fcitx -r
 #run emacs &
 run compton -b
 run xfce4-power-manager
+run nm-applet
+run nutstore
+run autokey-gtk
+run xfce4-clipman
