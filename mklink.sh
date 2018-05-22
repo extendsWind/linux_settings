@@ -1,14 +1,17 @@
 #!/bin/bash
 
-currentHome=~
+myHome=~
 
 # config file path and backup path
-fileLists=( 
-$currentHome/.config/awesome 
+fileLists=(
+$myHome/.config/awesome
 .
-$currentHome/.config/i3
+$myHome/.config/i3
 .
-$currentHome/.
+$myHome/.zshrc
+.
+$myHome/.spacemacs.d/init.el
+./spacemacs
 )
 
 
@@ -18,6 +21,9 @@ mklink(){
 	for ((i=0; i<$fileNum; i++))
 		{
 			if [ "$(($i%2))" = "0" ]; then
+                if [ ! -d ${fileLists[i+1]} ]; then
+                    mkdir ${fileLists[i+1]}
+                fi
 				lnFile=${fileLists[i+1]}/${fileLists[i]##*/}
 				if [ -f $lnFile ] ; then
 					rm $lnFile
