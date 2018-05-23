@@ -1,0 +1,5 @@
+colorscheme ir_black 
+set fileencodings=utf-8,gbk,gbk2312,gb18030
+autocmd FileType markdown set spell spelllang=en,cjk 
+set wrap
+set nospell

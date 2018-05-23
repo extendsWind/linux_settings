@@ -1,1 +1,0 @@
-/home/fly/.config/i3
