@@ -24,3 +24,4 @@ run fcitx -r
 run xfce4-power-manager
 run nutstore
 run autokey-gtk
+run xx-net

@@ -1,6 +1,14 @@
 #!/bin/bash
 
+# get current directory
+configDir=$(cd "$(dirname "$0")";pwd)
 myHome=~
+
+
+# TODO
+# awesome: remove dependence of other library
+# awesome: add program setting
+# function comment
 
 # config file path and backup path
 fileLists=(
@@ -58,7 +66,7 @@ getConfigFiles(){
                 # the backup file will be put in ./$fileLists[i+1]
 				bakFile=${fileLists[i+1]}/${fileLists[i]##*/}
 				if [ -f $bakFile ] || [ -d $bakFile ]  ; then
-					rm $bakFile
+					rm $bakFile -rf
 					echo $bakFile exist, delete it
 				fi
 
@@ -73,23 +81,29 @@ deploy_settings(){
 	fileNum=${#fileLists[@]}
 	for ((i=0; i<$fileNum; i++))
 		{
-			if [ "$(($i%2))" = "0" ]; then
-                # mkdir for current directory
-                if [ -f ${fileLists[i]} ] || [ -d ${fileLists[i]} ]; then
-                    mv ${fileLists[i]} ${fileLists[i]}.bak
-                fi
+            if [ "$(($i%2))" = "0" ]; then
 
+                # if backup config file exist
                 if [ -f ${fileLists[i+1]} ] || [ -d ${fileLists[i+1]} ]; then
-                    lnFile=${fileLists[i+1]}/${fileLists[i]##*/}
-                    mv $lnFile ${fileLists[i]}
+                    # rm the link if exist
+                    if [ -h ${fileLists[i]} ] ; then
+                        rm ${fileLists[i]}
+                    fi
+                    # backup the file if exist
+                    if [ -f ${fileLists[i]} ] || [ -d ${fileLists[i]} ]; then
+                        mv ${fileLists[i]} ${fileLists[i]}.bak
+                    fi
+
+                    lnFile=$(cd "${fileLists[i+1]}";pwd)/${fileLists[i]##*/}
+                    ln -s $lnFile ${fileLists[i]}
                 fi
-			fi
+            fi
 		}
 }
 
-getConfigFiles
+# getConfigFiles
 
-# deploy_settings
+deploy_settings
 #mklink
 
 # installSoftware  # not test

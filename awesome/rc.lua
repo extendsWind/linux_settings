@@ -222,9 +222,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- Each screen has its own tag table.
-    local names = { "read", "www", "term", "vim", "5", "6", "7", "8", "9" }
+    local names = { "read", "www", "term", "IDE", "5", "6", "7", "8", "9" }
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.tile, l.fair, l.tile, l.fair, l.max,
+    local layouts = { l.tile, l.fair, l.tile, l.max, l.max,
     l.floating, l.tile.left, l.floating, l.floating }
     awful.tag(names, s, layouts)
 
@@ -393,7 +393,7 @@ globalkeys = gears.table.join(
 
 
 
-    -- My Key Setting
+    -- my key settings
     --
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
@@ -406,7 +406,13 @@ globalkeys = gears.table.join(
     awful.key({ modkey}, "Insert", function() awful.spawn.with_shell("xprop > ~/aa.txt") end, {description = "xprop(get window class) to ~/aa.txt", group = "MySettings"}),
     awful.key({ "Control"}, "`", function() awful.spawn.with_shell("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "screenshooter", group = "MySettings"}),
     awful.key({ modkey}, "Up", function() awful.spawn.with_shell("pulseaudio-ctl up") end, {description = "audio volume up", group = "MySettings"}),
-    awful.key({ modkey}, "Down", function() awful.spawn.with_shell("pulseaudio-ctl down") end, {description = "audio volume down", group = "MySettings"})
+    awful.key({ modkey}, "Down", function() awful.spawn.with_shell("pulseaudio-ctl down") end, {description = "audio volume down", group = "MySettings"}),
+
+    -- tag control
+    awful.key({ modkey, "Mod1"}, "j",   awful.tag.viewprev,
+              {description = "view previous", group = "tag"}),
+    awful.key({ modkey, "Mod1"}, "k",  awful.tag.viewnext,
+              {description = "view next", group = "tag"})
 )
 
 clientkeys = gears.table.join(
@@ -613,7 +619,7 @@ awful.rules.rules = {
     {-- 快捷键输入表情
       rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
     },
-    {-- netease cloud music
+    {-- Golden Dict
       rule_any = {
         class = {
         "GoldenDict" }
@@ -623,7 +629,7 @@ awful.rules.rules = {
         local swidth = c.screen.geometry.width
         local sheight = c.screen.geometry.height
         local xRatio = 0.3
-        c:geometry({x = 0, y=sheight*0.5, width = swidth, height = sheight*0.5})
+        c:geometry({x = 0, y=sheight*0.5-c.screen.mywibox.heigh, width = swidth, height = sheight*0.5})
       end
     }, 
    {-- netease cloud music
@@ -631,7 +637,7 @@ awful.rules.rules = {
         class = {"netease-cloud-music"
         }
       }, 
-      properties = {floating = true, sticky = true},
+      properties = {floating = true, sticky = true}
     }, 
   
     {-- for floating application
@@ -644,7 +650,7 @@ awful.rules.rules = {
         local swidth = c.screen.geometry.width
         local sheight = c.screen.geometry.height
         local xRatio = 0.3
-        c:geometry({x = 0, y=sheight*0.5, width = swidth, height = sheight*0.5})
+        c:geometry({x = 0, y=sheight*0.5-c.screen.mywibox.height, width = swidth, height = sheight*0.5})
       end
     }}, 
     {--pomodoro_tk

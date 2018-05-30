@@ -109,6 +109,9 @@ alias cp="cp -i"
 alias mv="mv -i"
 
 
+# uncompatible processing
+setopt no_nomatch
+
 # zsh-autosuggetions is needed
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
