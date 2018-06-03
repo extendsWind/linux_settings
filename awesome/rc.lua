@@ -15,9 +15,10 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys")
 
 -- Freedesktop menu
-local freedesktop = require("freedesktop")
+-- removed for needing additional library
+--local freedesktop = require("freedesktop")
 
-local lain = require("lain")
+-- local lain = require("lain")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -129,21 +130,21 @@ myexitmenu= {
     { "shutdown", "poweroff", "/usr/share/icons/Arc-Maia/actions/24@2x/system-shutdown.png" }
 }
 
-mymainmenu = freedesktop.menu.build({
-    before = {
-        { "Terminal", terminal, "/usr/share/icons/Adwaita/32x32/apps/utilities-terminal.png" },
-        { "Browser", browser, "/usr/share/icons/hicolor/24x24/apps/chromium.png" },
-        { "Files", filemanager, "/usr/share/icons/Adwaita/32x32/apps/system-file-manager.png" },
-        -- other triads can be put here
-    },
-    after = {
-        { "Awesome", myawesomemenu, "/usr/share/awesome/icons/awesome16.png" },
-        { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
-        -- other triads can be put here
-    }
-})
+--mymainmenu = freedesktop.menu.build({
+--    before = {
+--        { "Terminal", terminal, "/usr/share/icons/Adwaita/32x32/apps/utilities-terminal.png" },
+--        { "Browser", browser, "/usr/share/icons/hicolor/24x24/apps/chromium.png" },
+--        { "Files", filemanager, "/usr/share/icons/Adwaita/32x32/apps/system-file-manager.png" },
+--        -- other triads can be put here
+--    },
+--    after = {
+--        { "Awesome", myawesomemenu, "/usr/share/awesome/icons/awesome16.png" },
+--        { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
+--        -- other triads can be put here
+--    }
+--})
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
+mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = myawesomemenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -158,8 +159,8 @@ mytextclock = wibox.widget.textclock("%b-%d %H:%M")
 
 
 -- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
+local taglist_buttons = awful.util.table.join(
+                    --awful.button({ }, 1, function(t) t:view_only() end),
                     awful.button({ modkey }, 1, function(t)
                                               if client.focus then
                                                   client.focus:move_to_tag(t)
@@ -175,7 +176,7 @@ local taglist_buttons = gears.table.join(
                     awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
                 )
 
-local tasklist_buttons = gears.table.join(
+local tasklist_buttons = awful.util.table.join(
                      awful.button({ }, 1, function (c)
                                               if c == client.focus then
                                                   c.minimized = true
@@ -233,7 +234,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
+    s.mylayoutbox:buttons(awful.util.table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
@@ -283,15 +284,15 @@ end)
 -- }}}
 
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+root.buttons(awful.util.table.join(
+--    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
 
 -- {{{ Key bindings
-globalkeys = gears.table.join(
+globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
@@ -313,8 +314,8 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+--    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+--              {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -415,7 +416,7 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"})
 )
 
-clientkeys = gears.table.join(
+clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
@@ -491,7 +492,7 @@ clientkeys = gears.table.join(
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
-    globalkeys = gears.table.join(globalkeys,
+    globalkeys = awful.util.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
                   function ()
@@ -537,7 +538,7 @@ for i = 1, 9 do
     )
 end
 
-clientbuttons = gears.table.join(
+clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize))
@@ -693,7 +694,7 @@ end)
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
-    local buttons = gears.table.join(
+    local buttons = awful.util.table.join(
         awful.button({ }, 1, function()
             client.focus = c
             c:raise()
