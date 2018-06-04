@@ -103,8 +103,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ssh0="ssh sparkl@tdh1 -Y"
-alias ssh1="ssh root@tdh1 -Y"
+alias ssh0="ssh sparkl@tdh1 -C -Y"
+alias ssh1="ssh root@tdh1 -C -Y"
 alias cp="cp -i"
 alias mv="mv -i"
 

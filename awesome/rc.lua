@@ -1,3 +1,8 @@
+-- Depandency
+-- icon in Arc-Maia
+
+
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -130,6 +135,7 @@ myexitmenu= {
     { "shutdown", "poweroff", "/usr/share/icons/Arc-Maia/actions/24@2x/system-shutdown.png" }
 }
 
+-- -- not use for depending on the library "freedesktop"
 --mymainmenu = freedesktop.menu.build({
 --    before = {
 --        { "Terminal", terminal, "/usr/share/icons/Adwaita/32x32/apps/utilities-terminal.png" },
@@ -144,7 +150,14 @@ myexitmenu= {
 --    }
 --})
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = myawesomemenu })
+mymainmenu = awful.menu({ items = {
+    { "awesome", myawesomemenu, beautiful.awesome_icon },
+    { "open terminal", terminal },
+    { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
+}})
+
+mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu})
+
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -160,7 +173,7 @@ mytextclock = wibox.widget.textclock("%b-%d %H:%M")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
-                    --awful.button({ }, 1, function(t) t:view_only() end),
+                    awful.button({ }, 1, function(t) t:view_only() end),
                     awful.button({ modkey }, 1, function(t)
                                               if client.focus then
                                                   client.focus:move_to_tag(t)
