@@ -105,11 +105,17 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ssh0="ssh sparkl@tdh1 -C -Y"
 alias ssh1="ssh root@tdh1 -C -Y"
+alias ssh2="ssh root@tdh2 -C -Y"
+alias ssh3="ssh root@tdh3 -C -Y"
+alias ssh4="ssh root@tdh4 -C -Y"
 alias cp="cp -i"
 alias mv="mv -i"
 
+alias sslocal="sslocal -c /etc/shadowsocks/config.json"
 
-# uncompatible processing
+
+# uncompatible processing 
+# for example: find / -name *.zsh may not work well
 setopt no_nomatch
 
 # zsh-autosuggetions is needed

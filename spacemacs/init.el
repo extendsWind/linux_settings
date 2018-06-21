@@ -372,6 +372,10 @@ you should place your code here."
   (setq yas-snippet-dirs '("~/.emacs.d/snippets" )) ;; personal snippets
 
 
+  ;; ### markdown
+  (setq markdown-command "/usr/bin/pandoc")
+
+
   ;; ### org
   ;; change a line if the line is too long
   (add-hook 'text-mode-hook 'spacemacs/toggle-truncate-lines-off)

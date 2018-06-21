@@ -6,9 +6,9 @@ myHome=~
 
 
 # TODO
-# awesome: remove dependence of other library
 # awesome: add program setting
 # function comment
+# Program dependency comment
 
 # config file path and backup path
 fileLists=(
@@ -49,6 +49,7 @@ mklink(){
 				echo create link from ${fileLists[i]} to $lnFile
 			fi
         }
+
 }
 
 getConfigFiles(){
@@ -99,6 +100,8 @@ deploy_settings(){
                 fi
             fi
 		}
+    sudo ln -s $configDir/ss/config.json /etc/shadowsocks/config.json
+
 }
 
 # getConfigFiles

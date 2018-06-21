@@ -1,0 +1,12 @@
+{
+    "server":"23.105.219.71",
+    "server_port":8311,
+    "local_address": "127.0.0.1",
+    "local_port":8311,
+    "password":"ClulRaju",
+    "timeout":300,
+    "method":"chacha20",
+    "fast_open": false,
+    "workers": 1,
+    "prefer_ipv6": false
+}

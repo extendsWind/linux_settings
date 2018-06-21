@@ -411,14 +411,14 @@ globalkeys = awful.util.table.join(
     --
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
-    awful.key({"Mod1"}, "F2", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Mod1"}, "F2", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh a") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({ modkey }, "e", function() awful.spawn("thunar") end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("python /home/fly/.config/awesome/keydown.py ") end, {description = "move up", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("xdotool click 5") end, {description = "move down", group = "MySettings"}),
     awful.key({ modkey}, "Insert", function() awful.spawn.with_shell("xprop > ~/aa.txt") end, {description = "xprop(get window class) to ~/aa.txt", group = "MySettings"}),
-    awful.key({ "Control"}, "`", function() awful.spawn.with_shell("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "screenshooter", group = "MySettings"}),
     awful.key({ modkey}, "Up", function() awful.spawn.with_shell("pulseaudio-ctl up") end, {description = "audio volume up", group = "MySettings"}),
     awful.key({ modkey}, "Down", function() awful.spawn.with_shell("pulseaudio-ctl down") end, {description = "audio volume down", group = "MySettings"}),
 
@@ -561,6 +561,41 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
+--
+
+-- for wine TIM and QQ
+local old_filter = awful.client.focus.filter
+function myfocus_filter(c)
+  if old_filter(c) then
+    -- TM.exe completion pop-up windows
+    if (c.instance == 'tm.exe' or c.instance == 'TIM.exe')
+        and c.above and c.skip_taskbar
+        and (c.type == 'normal' or c.type == 'dialog') -- dialog type is for tooltip windows
+        and (c.class == 'qq.exe' or c.class == 'QQ.exe' or c.class == 'TIM.exe') then
+        return nil
+    -- This works with tooltips and some popup-menus
+    elseif c.class == 'Wine' and c.above == true then
+      return nil
+    elseif (c.class == 'Wine' or c.class == 'QQ.exe' or c.class == 'qq.exe')
+      and c.type == 'dialog'
+      and c.skip_taskbar == true
+      and c.size_hints.max_width and c.size_hints.max_width < 160
+      then
+      -- for popup item menus of Photoshop CS5
+      return nil
+    -- popups for Settings page in Firefox
+    elseif c.skip_taskbar and c.instance == 'Popup' and c.class == 'Firefox' then
+      return nil
+    elseif c.class == 'Key-mon' then
+      return nil
+    else
+      return c
+    end
+  end
+end
+awful.client.focus.filter = myfocus_filter
+
+
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
@@ -609,30 +644,32 @@ awful.rules.rules = {
       --}, properties = { titlebars_enabled = true }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
-    --
     
     -- my rules
     --
-    {
-      rule = {class = "Wine"},
-      except = {name = "?*"},
-      properties = {focusable = false, floating = true, sticky = true},
-     -- callback = function (c)
-    --naughty.notify({ preset = naughty.config.presets.critical,
-     --                title = c.name.."--"..c.class.."--"..c.type,
-      --               text = awesome.startup_errors })
-      --             end
-      -- 解决qq选表情的闪退问题
-    },
-    {--wine
-      rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
-    },
-    {-- 快捷键输入表情
-      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
-    },
+    { rule = {class = "Wine"}, 
+      except = {name = "CAJViewer 7.2"},
+      properties = {floating = true; sticky = true} },
+--    {
+--      rule = {class = "Wine"},
+--      except = {name = "?*"},
+--      properties = {focusable = false, floating = true, sticky = true},
+--     -- callback = function (c)
+--    --naughty.notify({ preset = naughty.config.presets.critical,
+--     --                title = c.name.."--"..c.class.."--"..c.type,
+--      --               text = awesome.startup_errors })
+--      --             end
+--      -- 解决qq选表情的闪退问题
+--    },
+--    {--wine
+--      rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
+--    },
+--    {
+--        rule = {class = "Wine", name="1051668814@qq.com"}, properties = {focusable = false}
+--    },
+--    {-- 快捷键输入表情
+--      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
+--    },
     {-- Golden Dict
       rule_any = {
         class = {
@@ -671,15 +708,15 @@ awful.rules.rules = {
       rule = {class = "Tk"}, properties = {floating = true, sticky = true, skip_taskbar=true, focusable=false -- super+j/k will not get the focus
     }
     },
-    {--vivaldi
-      rule = {class = "Vivaldi"}, properties = {tag = "www"}
+    {--browser
+      rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "www"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},
       callback = function (c)
-      local swidth = c.screen.geometry.width
-      local xRatio = 0.3
-      c:geometry({x = swidth*xRatio, y=0, width = swidth*(1-xRatio)})
+          local swidth = c.screen.geometry.width
+          local xRatio = 0.3
+          c:geometry({x = swidth*xRatio, y=0, width = swidth*(1-xRatio)})
       end
     },
     {--xfce4-terminal-drop-down
