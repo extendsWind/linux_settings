@@ -85,9 +85,6 @@ deploy_settings(){
 
 }
 
-# getConfigFiles
 
 deploy_settings
-#mklink
 
-# installSoftware  # not test
