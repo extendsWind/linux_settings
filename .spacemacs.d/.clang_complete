@@ -1,0 +1,10 @@
+-I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../include/c++/7.3.0
+-I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../include/c++/7.3.0/x86_64-pc-linux-gnu
+-I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../include/c++/7.3.0/backward
+-I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include
+-I/usr/local/include
+-I/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include-fixed
+-I/usr/include
+-I/run/media/fly/data1/public_download/初赛文档/用例示例/git_code/sdk-gcc/ecs/lib
+
+
