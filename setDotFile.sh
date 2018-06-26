@@ -25,33 +25,9 @@ $myHome/.vimrc.local
 )
 
 
-# mklink(){
-# 	fileNum=${#fileLists[@]}
-# 	echo total file number: $(($fileNum/2))
-# 	for ((i=0; i<$fileNum; i++))
-# 		{
-# 			if [ "$(($i%2))" = "0" ]; then
-# 
-#                 # mkdir for current directory
-#                 if [ ! -d ${fileLists[i+1]} ]; then
-#                     mkdir ${fileLists[i+1]}
-#                 fi
-# 
-#                 # the linked file will be put in fileLists[i+1]
-# 				lnFile=${fileLists[i+1]}/${fileLists[i]##*/}
-# 				if [ -f $lnFile ] || [ -d $lnFile ]  ; then
-# 					rm $lnFile
-# 					echo $lnFile exist, delete it
-# 				fi
-# 
-#                 # create link (file non-exist is not considerred)
-# 				ln -s ${fileLists[i]} $lnFile
-# 				echo create link from ${fileLists[i]} to $lnFile
-# 			fi
-#         }
-# 
-# }
-# 
+# 从系统中获取配置文件
+# 只在初始化仓库时用过，没什么其它用
+# 注意在deploy_settings调用后，系统配置文件已经是链接，调用此函数会出问题
 getConfigFiles(){
 	fileNum=${#fileLists[@]}
 	echo total file number: $(($fileNum/2))
@@ -101,13 +77,17 @@ deploy_settings(){
                 fi
             fi
 		}
+
+    if [ -h  /etc/shadowsocks/config.json ]; then
+        sudo rm /etc/shadowsocks/config.json
+    fi
     sudo ln -s $configDir/ss/config.json /etc/shadowsocks/config.json
 
 }
 
-getConfigFiles
+# getConfigFiles
 
-# deploy_settings
+deploy_settings
 #mklink
 
 # installSoftware  # not test
