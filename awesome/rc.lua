@@ -57,11 +57,15 @@ beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 
 ---------------------------------------
 -- my theme settings 
+beautiful.bg_normal = "#000000ff"
+beautiful.bg_systray = "#000000ff"
+
 beautiful.border_width = 0
 beautiful.systray_icon_spacing = 1
 beautiful.tasklist_disable_task_name = true
 beautiful.tasklist_align = "center"
 beautiful.wibar_height = 18
+beautiful.wallpaper = awful.util.get_configuration_dir() .. "wallpaper1.jpg"
 --beautiful.tasklist_plain_task_name = true
 
 ---------------------------------------
@@ -265,6 +269,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox 底部状态栏
     s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
+    
+    
+
     -- system tray
     s.mySystray = wibox.widget.systray()
     s.mySystray:set_base_size(17)
@@ -291,14 +298,17 @@ awful.screen.connect_for_each_screen(function(s)
     --mykeyboardlayout,
     mytextclock,
     s.mylayoutbox,
-  },
-}
+    },
+    }
+
+
 end)
 -- }}}
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
---    awful.button({ }, 3, function () mymainmenu:toggle() end),
+--    awful.button({ }, 2, function (c) c:kill() end),
+    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))

@@ -3,3 +3,15 @@ set fileencodings=utf-8,gbk,gbk2312,gb18030
 "autocmd FileType markdown set spell spelllang=en,cjk 
 set wrap
 set nospell
+
+
+" ----shortcut-----
+
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-n> <Esc>gji
+inoremap <C-p> <Esc>gki
+inoremap <C-d> <Delete>
+
