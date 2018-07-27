@@ -22,6 +22,7 @@ run gnome-keyring-daemon
 
 run fcitx -r
 run xfce4-power-manager
+run xfce4-clipman
 run nutstore
 run autokey-gtk
 run xx-net

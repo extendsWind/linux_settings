@@ -421,7 +421,7 @@ globalkeys = awful.util.table.join(
     --
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
-    awful.key({"Mod1"}, "F2", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh a") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({ modkey }, "e", function() awful.spawn("thunar") end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
