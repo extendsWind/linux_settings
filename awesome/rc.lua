@@ -718,6 +718,12 @@ awful.rules.rules = {
       rule = {class = "Tk"}, properties = {floating = true, sticky = true, skip_taskbar=true, focusable=false -- super+j/k will not get the focus
     }
     },
+    {--pomodoro_tk
+    rule = {class = "Thunar"},  
+    callback = function(c)
+        c.maximized = false
+    end
+},
     {--browser
       rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "www"}
     },
