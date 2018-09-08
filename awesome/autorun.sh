@@ -25,4 +25,6 @@ run xfce4-power-manager
 run xfce4-clipman
 run nutstore
 run autokey-gtk
-run xx-net
+# run xx-net
+
+run "sslocal -c /etc/shadowsocks/config.json"

@@ -1,5 +1,8 @@
 -- Depandency
--- icon in Arc-Maia
+--  icon in Arc-Maia
+--  xtrlock for screen lock
+--  xfce4-terminal
+--  j4-dmenu for quick application search
 
 
 
@@ -71,7 +74,7 @@ beautiful.wallpaper = awful.util.get_configuration_dir() .. "wallpaper1.jpg"
 ---------------------------------------
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
+terminal = os.getenv("TERMINAL") or "xfce4-terminal"
 terminal2 = "xterm"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
@@ -156,6 +159,7 @@ myexitmenu= {
 
 mymainmenu = awful.menu({ items = {
     { "awesome", myawesomemenu, beautiful.awesome_icon },
+    { "lock", "xtrlock"},
     { "open terminal", terminal },
     { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
 }})
@@ -422,9 +426,12 @@ globalkeys = awful.util.table.join(
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
     awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh w") end, {description = "WeChat toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh a") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({ modkey }, "e", function() awful.spawn("thunar") end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+    awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("python /home/fly/.config/awesome/keydown.py ") end, {description = "move up", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("xdotool click 5") end, {description = "move down", group = "MySettings"}),
