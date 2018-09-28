@@ -244,9 +244,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- Each screen has its own tag table.
-    local names = { "read", "www", "term", "IDE", "5", "6", "7", "8", "9" }
+    local names = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.tile, l.fair, l.tile, l.max, l.max,
+    local layouts = { l.tile, l.floating, l.tile, l.max, l.max,
     l.floating, l.tile.left, l.floating, l.floating }
     awful.tag(names, s, layouts)
 
@@ -681,9 +681,6 @@ awful.rules.rules = {
 --    {--wine
 --      rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
 --    },
---    {
---        rule = {class = "Wine", name="1051668814@qq.com"}, properties = {focusable = false}
---    },
 --    {-- 快捷键输入表情
 --      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
 --    },
@@ -732,7 +729,7 @@ awful.rules.rules = {
     end
 },
     {--browser
-      rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "www"}
+      rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "2"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},

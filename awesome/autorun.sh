@@ -11,7 +11,6 @@ function run {
 run nm-applet # for network system tray
 # run dbus-launch update-checker
 run light-locker # lock the screen when suspend
-run pulseaudio -D
 run compton --shadow-exclude '!focused'
 # run /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 # for privilige management??
 run thunar --daemon
@@ -19,6 +18,7 @@ run thunar --daemon
 #run xfsettingsd # for xfce4
 run gnome-keyring-daemon
 # run urxvtd # command not found
+# run pulseaudio -D # audio control, why start error??
 
 run fcitx -r
 run xfce4-power-manager

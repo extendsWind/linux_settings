@@ -43,7 +43,9 @@ values."
      auto-completion
      (c-c++ :variables
             c-c++-enable-clang-support t
-            c-c++-default-mode-for-headers 'c++-mode)
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-rtags-support t
+            c-c++-enable-auto-newline t)
      syntax-checking ;; flycheck there
      semantic
      ;; better-defaults
@@ -57,7 +59,9 @@ values."
      ;; vmd install needed by "sudo npm install -g vmd --unsafe-perm=true --allow-root"
      ;;markdown
 
-     (org :variables org-enable-github-support t) ;; for emacs 
+     (org :variables
+          org-enable-github-support t
+          org-want-todo-bindings t) ;; for emacs
 
      myGame
      ;; (shell :variables
@@ -66,14 +70,26 @@ values."
      ;; spell-checking
 
      ;; version-control
-     (python :variables python-enable-yapf-format-on-save t)
+     (python :variables
+          ;;   python-shell-interpreter "/usr/bin/python3"
+             python-enable-yapf-format-on-save t
+             python-shell-completion-native-disabled-interpreters '("pypy")
+             python-backend 'anaconda
+             python-sort-imports-on-save t)
+
+
+     lsp ;; for python autocomplete backend
+
      )
+
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      yasnippet-snippets)
+                                      yasnippet-snippets
+                                      (jedi :location elpa)
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -96,6 +112,13 @@ values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
+
+   python-shell-interpreter "ipython"
+   python-shell-interpreter-args "-i"
+
+
+
+
    ;; If non nil ELPA repositories are contacted via HTTPS whenever it's
    ;; possible. Set it to nil if you have no way to use HTTPS in your
    ;; environment, otherwise it is strongly recommended to let it set to t.
@@ -155,11 +178,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("monospace" ;"courier new"
+   dotspacemacs-default-font '("Droid Sans Mono";"courier new" ;"monospace" "Noto Sans Mono" 
                                :size 13
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -314,7 +337,7 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
-   ))
+   )))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -352,10 +375,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;;(setq-default dotspacemacs-auto-resume-layouts t)
 
-  ;; python
-  ;;(add-to-list 'python-shell-extra-pythonpaths "/usr/lib/python3.6/site-packages")
-
-)
+;;  (setq-default python-shell-interpreter "/usr/bin/python3")
+ )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -365,13 +386,46 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (setq x-select-enable-clipboard-manager nil)
+  ;; ### backup
+  ;; (setq
+  ;;  backup-by-copying t ; 自动备份
+  ;;  backup-directory-alist
+  ;;  '(("." . ,(concat user-emacs-directory "backups")))
+  ;;  ;;`(("." ., "~/.emacs_backup")) ; 自动备份在目录"~/.saves"下
+  ;;  delete-old-versions t ; 自动删除旧的备份文件
+  ;;  kept-new-versions 6 ; 保留最近的6个备份文件
+  ;;  kept-old-versions 2 ; 保留最早的2个备份文件
+  ;;  version-control t) ; 多次备份
+
+  ;; (setq
+  ;;  auto-save-interval 30
+  ;;  dotspacemacs-auto-save-file-location original) ;; auto save file in file original
+
+
+  ;; (setq x-select-enable-clipboard-manager nil)
   ;; hang when close the emacs
 
 
   ;; copy ~/.emacs.d/elpa/yasnippet-snippets-20180503.657/snippets
   ;; to the directory (to be repair in the new spacemacs version)
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets" )) ;; personal snippets
+  ;;(setq yas-snippet-dirs '("~/.emacs.d/snippets" )) ;; personal snippets
+
+
+  ;; ### python
+
+  ;; setting to python3 not work
+
+  ;; (eval-after-load "company"
+  ;;   '(add-to-list 'company-backends 'company-anaconda))
+  ;; (with-eval-after-load 'python
+  ;;   (add-hook 'python-mode-hook (lambda () (setq python-shell-interpreter "/usr/bin/python3"))))
+
+;;  (with-eval-after-load 'anaconda-mode
+ ;;     (add-to-list 'python-shell-extra-pythonpaths "/usr/lib/python3.7/site-packages")
+  ;;    (add-to-list 'python-shell-extra-pythonpaths "/usr/lib/python3.7")
+  ;;)
+;;  (setq python-shell-interpreter "/usr/bin/python3")
+;;  (setq python-shell-interpreter-args "-m IPython --simple-prompt -i")
 
 
 
@@ -387,7 +441,11 @@ you should place your code here."
   ;;  (toggle-truncate-lines t) ;;useless in spacemacs
   ;; or use this(not test)
   ;;(add-hook 'text-mode-hook (lambda () (toggle-truncate-lines 1)))
-  (setq org-startup-indented t) ;; auto indented
+
+  (with-eval-after-load 'org
+    (setq org-startup-indented t) ;; auto indented
+;;    (define-key evil-motion-state-map "t" 'evil-next-visual-line)
+  )
 
 
 
@@ -396,7 +454,7 @@ you should place your code here."
   ;; markdown convert may failed for too many level in TOC generated by
   ;; markdown-toc-generate
   (defun convert-to-pdf-pandoc ()
-    "convert org file to pdf by pandoc"
+    "convert org or markdown file to pdf by pandoc"
     (interactive)
     ;;(message "test")
     ;;(message (buffer-file-name))
@@ -465,10 +523,33 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ox-gfm yasnippet-snippets vmd-mode dash-functional helm-pydoc anaconda-mode pythonic flycheck-pos-tip pos-tip flycheck flycheck-clangcheck web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data 2048-game org-category-capture alert log4e gntp markdown-mode helm-company helm-c-yasnippet company yasnippet auto-complete ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode paradox spinner org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link ace-jump-helm-line yapfify which-key wgrep use-package unfill stickyfunc-enhance srefactor smex pyvenv pytest pyenv-mode py-isort pip-requirements pcre2el org-projectile org-present org-pomodoro org-mime org-download mwim mmm-mode markdown-toc macrostep live-py-mode ivy-hydra hy-mode htmlize helm-make gnuplot gh-md fuzzy flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav disaster diminish cython-mode counsel-projectile company-statistics company-c-headers company-anaconda cmake-mode clang-format bind-map auto-yasnippet auto-compile ace-window ac-ispell))))
+    (org-plus-contrib hydra projectile pkg-info epl evil goto-chg bind-key packed helm avy helm-core async f s dash popup jedi jedi-core python-environment epc ctable concurrent deferred ox-gfm yasnippet-snippets vmd-mode dash-functional helm-pydoc anaconda-mode pythonic flycheck-pos-tip pos-tip flycheck flycheck-clangcheck web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data 2048-game org-category-capture alert log4e gntp markdown-mode helm-company helm-c-yasnippet company yasnippet auto-complete ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode paradox spinner org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link ace-jump-helm-line yapfify which-key wgrep use-package unfill stickyfunc-enhance srefactor smex pyvenv pytest pyenv-mode py-isort pip-requirements pcre2el org-projectile org-present org-pomodoro org-mime org-download mwim mmm-mode markdown-toc macrostep live-py-mode ivy-hydra hy-mode htmlize helm-make gnuplot gh-md fuzzy flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav disaster diminish cython-mode counsel-projectile company-statistics company-c-headers company-anaconda cmake-mode clang-format bind-map auto-yasnippet auto-compile ace-window ac-ispell)))
+ '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flymd lsp-ui lsp-python company-lsp lsp-mode org-plus-contrib hydra projectile pkg-info epl evil goto-chg bind-key packed helm avy helm-core async f s dash popup jedi jedi-core python-environment epc ctable concurrent deferred ox-gfm yasnippet-snippets vmd-mode dash-functional helm-pydoc anaconda-mode pythonic flycheck-pos-tip pos-tip flycheck flycheck-clangcheck web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data 2048-game org-category-capture alert log4e gntp markdown-mode helm-company helm-c-yasnippet company yasnippet auto-complete ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode paradox spinner org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link ace-jump-helm-line yapfify which-key wgrep use-package unfill stickyfunc-enhance srefactor smex pyvenv pytest pyenv-mode py-isort pip-requirements pcre2el org-projectile org-present org-pomodoro org-mime org-download mwim mmm-mode markdown-toc macrostep live-py-mode ivy-hydra hy-mode htmlize helm-make gnuplot gh-md fuzzy flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav disaster diminish cython-mode counsel-projectile company-statistics company-c-headers company-anaconda cmake-mode clang-format bind-map auto-yasnippet auto-compile ace-window ac-ispell)))
+ '(paradox-github-token t)
+ '(python-shell-interpreter "/ssh:127.0.0.1:/usr/bin/python3" t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
