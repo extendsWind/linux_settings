@@ -1,0 +1,2 @@
+#!/bin/bash
+wakeonlan ac:1f:6b:01:31:04

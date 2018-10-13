@@ -22,6 +22,10 @@ $myHome/.spacemacs.d
 .
 $myHome/.vimrc.local
 ./vim_spf13
+$myHome/.emacs_alone
+.
+$myHome/quick_start
+.
 )
 
 
