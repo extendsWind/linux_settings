@@ -450,6 +450,11 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; ### normal setting
 
+  (setq configuration-layer--elpa-archives
+        '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+          ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+          ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+
   ;; line number
   (setq-default dotspacemacs-line-numbers '(:relative nil
                                                       :enabled-for-modes c++-mode
@@ -460,11 +465,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
                                                       text-mode
                                                       :size-limit-kb 1000))
 
-  (setq configuration-layer--elpa-archives
-        '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-          ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-          ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
 
+  ;; The window frame cannot be maximized 100% to suit the whole screen
+  (setq frame-resize-pixelwise t)
 
 
   )

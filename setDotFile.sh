@@ -18,15 +18,19 @@ $myHome/.config/awesome
 .
 $myHome/.zshrc
 .
-$myHome/.spacemacs.d
-.
 $myHome/.vimrc.local
 ./vim_spf13
-$myHome/.emacs_alone
+$myHome/.emacs
 .
 $myHome/quick_start
 .
 )
+
+# 暂时停用spacemacs，启动速度略慢而且基本用不上太多的功能
+# 如Python c++依赖的简单编写偶尔会出bug略不稳定
+# 对.emacs文件进行了简单的改装，使用自己配置的emacs
+#$myHome/.spacemacs.d 
+#.
 
 
 # 从系统中获取配置文件

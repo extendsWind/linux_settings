@@ -3,7 +3,14 @@
 --  xtrlock for screen lock
 --  xfce4-terminal
 --  j4-dmenu for quick application search
+--  caja (mate file manager)
+--  editor vim (optional, not important)
 
+-- This is used later as the default terminal and editor to run.
+terminal = os.getenv("TERMINAL") or "xfce4-terminal"
+editor = os.getenv("EDITOR") or "vim"
+editor_cmd = terminal .. " -e " .. editor
+file_manager = "caja"
 
 
 -- Standard awesome library
@@ -73,11 +80,6 @@ beautiful.wallpaper = awful.util.get_configuration_dir() .. "wallpaper1.jpg"
 
 ---------------------------------------
 
--- This is used later as the default terminal and editor to run.
-terminal = os.getenv("TERMINAL") or "xfce4-terminal"
-terminal2 = "xterm"
-editor = os.getenv("EDITOR") or "nvim"
-editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -240,7 +242,6 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
-
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- Each screen has its own tag table.
@@ -303,10 +304,11 @@ awful.screen.connect_for_each_screen(function(s)
     mytextclock,
     s.mylayoutbox,
     },
-    }
+  }
+end
+)
 
 
-end)
 -- }}}
 
 -- {{{ Mouse bindings
@@ -425,10 +427,10 @@ globalkeys = awful.util.table.join(
     --
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
-    awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
-    awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh w") end, {description = "WeChat toggle", group = "MySettings"}),
-    awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh a") end, {description = "TIM/QQ toggle", group = "MySettings"}),
-    awful.key({ modkey }, "e", function() awful.spawn("thunar") end, {description = "open file explorer", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "TIM/QQ screenshot", group = "MySettings"}),
+    awful.key({ modkey }, "e", function() awful.spawn(file_manager .. " " .. os.getenv("HOME")) end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
     awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
 
@@ -615,6 +617,7 @@ awful.client.focus.filter = myfocus_filter
 
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
+
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
@@ -624,7 +627,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                     size_hints_honor = false -- for terminal not full maximize
      }
     },
 
