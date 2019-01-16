@@ -22,6 +22,8 @@ $myHome/.vimrc.local
 ./vim_spf13
 $myHome/.emacs
 .
+$myHome/.vimrc
+.
 $myHome/quick_start
 .
 )
