@@ -693,6 +693,13 @@ awful.rules.rules = {
         c:geometry({x = 0, y=sheight*0.5-c.screen.mywibox.heigh, width = swidth, height = sheight*0.5})
       end
     }, 
+ {-- remmina
+      rule_any = {
+        class = {"remmina", "Remmina"
+        }
+      }, 
+      properties = {floating = false, sticky = false}
+    },
    {-- netease cloud music
       rule_any = {
         class = {"netease-cloud-music"
