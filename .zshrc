@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/fly/.oh-my-zsh
+export ZSH=/home/fly/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -103,15 +103,21 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# ssh
 alias ssh0="ssh sparkl@tdh1 -C -Y"
 alias ssh1="ssh root@tdh1 -C -Y"
 alias ssh2="ssh root@tdh2 -C -Y"
 alias ssh3="ssh root@tdh3 -C -Y"
 alias ssh4="ssh root@tdh4 -C -Y"
+alias sshss="ssh fly@23.105.219.71  -p 28979"
+
 alias cp="cp -i"
 alias mv="mv -i"
 
 alias sslocal="sslocal -c /etc/shadowsocks/config.json"
+
+alias sshandroid="ssh user@192.168.3.106 -p 8022"
 
 
 # uncompatible processing 

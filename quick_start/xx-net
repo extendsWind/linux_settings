@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+#systemctl restart miredo
+# miredo -f
+/home/fly/program/xx-net/xx_net.sh start

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+unset http_proxy https_proxy ftp_proxy rsync_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY RSYNC_PROXY
+
+echo -e "Proxy removed"

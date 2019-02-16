@@ -1,6 +1,16 @@
 -- Depandency
--- icon in Arc-Maia
+--  icon in Arc-Maia
+--  xtrlock for screen lock
+--  xfce4-terminal
+--  j4-dmenu for quick application search
+--  caja (mate file manager)
+--  editor vim (optional, not important)
 
+-- This is used later as the default terminal and editor to run.
+terminal = os.getenv("TERMINAL") or "xfce4-terminal"
+editor = os.getenv("EDITOR") or "vim"
+editor_cmd = terminal .. " -e " .. editor
+file_manager = "caja"
 
 
 -- Standard awesome library
@@ -70,11 +80,6 @@ beautiful.wallpaper = awful.util.get_configuration_dir() .. "wallpaper1.jpg"
 
 ---------------------------------------
 
--- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
-terminal2 = "xterm"
-editor = os.getenv("EDITOR") or "nvim"
-editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -156,6 +161,7 @@ myexitmenu= {
 
 mymainmenu = awful.menu({ items = {
     { "awesome", myawesomemenu, beautiful.awesome_icon },
+    { "lock", "xtrlock"},
     { "open terminal", terminal },
     { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
 }})
@@ -236,13 +242,12 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
-
     -- Each screen has its own tag table.
     --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
     -- Each screen has its own tag table.
-    local names = { "read", "www", "term", "IDE", "5", "6", "7", "8", "9" }
+    local names = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.tile, l.fair, l.tile, l.max, l.max,
+    local layouts = { l.tile, l.floating, l.tile, l.max, l.max,
     l.floating, l.tile.left, l.floating, l.floating }
     awful.tag(names, s, layouts)
 
@@ -299,10 +304,11 @@ awful.screen.connect_for_each_screen(function(s)
     mytextclock,
     s.mylayoutbox,
     },
-    }
+  }
+end
+)
 
 
-end)
 -- }}}
 
 -- {{{ Mouse bindings
@@ -421,10 +427,13 @@ globalkeys = awful.util.table.join(
     --
     --
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
-    awful.key({"Mod1"}, "F2", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
-    awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys1.sh a") end, {description = "TIM/QQ toggle", group = "MySettings"}),
-    awful.key({ modkey }, "e", function() awful.spawn("thunar") end, {description = "open file explorer", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
+    awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "TIM/QQ screenshot", group = "MySettings"}),
+    awful.key({ modkey }, "e", function() awful.spawn(file_manager .. " " .. os.getenv("HOME")) end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+    awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("python /home/fly/.config/awesome/keydown.py ") end, {description = "move up", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("xdotool click 5") end, {description = "move down", group = "MySettings"}),
@@ -608,6 +617,7 @@ awful.client.focus.filter = myfocus_filter
 
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
+
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
@@ -617,7 +627,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                     size_hints_honor = false -- for terminal not full maximize
      }
     },
 
@@ -674,9 +685,6 @@ awful.rules.rules = {
 --    {--wine
 --      rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
 --    },
---    {
---        rule = {class = "Wine", name="1051668814@qq.com"}, properties = {focusable = false}
---    },
 --    {-- 快捷键输入表情
 --      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
 --    },
@@ -725,8 +733,14 @@ awful.rules.rules = {
       rule = {class = "Tk"}, properties = {floating = true, sticky = true, skip_taskbar=true, focusable=false -- super+j/k will not get the focus
     }
     },
+    {--pomodoro_tk
+    rule = {class = "Thunar"},  
+    callback = function(c)
+        c.maximized = false
+    end
+},
     {--browser
-      rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "www"}
+      rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "2"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},

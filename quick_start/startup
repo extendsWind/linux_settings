@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pulseaudio -D
+emacs &
+vivaldi-stable &
+/opt/deepinwine/apps/Deepin-TIM/run.sh &
+pomodoro &
