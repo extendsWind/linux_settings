@@ -116,8 +116,11 @@ alias cp="cp -i"
 alias mv="mv -i"
 
 alias sslocal="sslocal -c /etc/shadowsocks/config.json"
+alias sshandroid="ssh user@192.168.3.18 -p 8022"
 
-alias sshandroid="ssh user@192.168.3.106 -p 8022"
+
+alias vim=nvim
+
 
 
 # uncompatible processing 
@@ -127,4 +130,5 @@ setopt no_nomatch
 # zsh-autosuggetions is needed
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 

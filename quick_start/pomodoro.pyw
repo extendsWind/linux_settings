@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/python
 
 import tkinter
 
@@ -9,16 +9,32 @@ import tkinter
 - [x] function packing
 - generate a usage record
 """
+# thinter init
+root = tkinter.Tk()
+screenWidth, screenHeight = root.maxsize()
+
 
 """
-input parameters by user
+input parameters by user -----
 """
 # pomodoro
 workTime = 25
 restTime = 5
 
+# window size
+windowWidth = 100
+windowHeight = 40
+windowX = 10
+windowY = screenHeight-60
+
+
+"""
+input parameters by user ----- End 
+"""
+
+
 # better to use gif image
-#clock_icon_file = "clock.gif"
+# clock_icon_file = "clock.gif"
 
 isWork = True
 isStopped = False
@@ -88,23 +104,27 @@ def label_click(event):
 
 if __name__ == "__main__":
 
-    # thinter init
-    root = tkinter.Tk()
-
     # set the icon
 #    img = tkinter.PhotoImage(file=clock_icon_file)
 #    root.tk.call('wm', 'iconphoto', root._w, img)
 
-    screenWid, screenHeight = root.maxsize()
-    win_size = "50x30+10+%d" % (screenHeight - 80)
+    win_size = "{:d}x{:d}+{:d}+{:d}".format(windowWidth, windowHeight, windowX, windowY)
     root.geometry(win_size)
     root.wm_attributes("-topmost", 1)  # always on top
     root.title(" ")
 
     label1 = tkinter.Label(text="{:d} : 0{:d}".format
-                           (tMin, tSec), height=10, width=15)
+                           (tMin, tSec))
+#                           (tMin, tSec), height=10, width=15)
+
+#    label1.grid(row=0, column=0, padx=1, pady=1)
     label1.pack()
     label1.bind("<Button-1>", label_click)
+
+    entry1 = tkinter.Entry(root)
+#    entry1.grid(row=1, column=0, padx=1, pady=1)
+    entry1.pack()
+
 
     # start timer
     label1.after(1000, update_label, label1)

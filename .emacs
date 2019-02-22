@@ -77,6 +77,7 @@
 (setq inhibit-startup-message t) ;; hide the startup message
 (load-theme 'molokai t)		 ;; load material theme, using
 (global-linum-mode t)		 ;; enable line numbers globally
+(toggle-frame-maximized) ;; startup maximize
 
 
 
@@ -195,6 +196,7 @@
 
 ;; ### for python
 ;; the plugin: elpy  flycheck
+;; M-n/p for auto-complete candiate chosen 
 
 (elpy-enable)
 
@@ -296,8 +298,7 @@
 ;;(recentf-mode)
 ;; ### spacemacs like keybinding
 (define-key evil-normal-state-map (kbd "SPC SPC") 'helm-M-x)
-(define-key evil-normal-state-map (kbd "SPC f f") 'find-file)
-(define-key evil-normal-state-map (kbd "SPC f f") 'find-file)
+(define-key evil-normal-state-map (kbd "SPC f f") 'helm-find-files)
 (define-key evil-normal-state-map (kbd "SPC f r") 'helm-recentf)
 
 (define-key evil-normal-state-map (kbd "SPC w /") 'split-window-right)
@@ -311,5 +312,5 @@
 (define-key evil-normal-state-map (kbd "SPC b d") 'evil-delete-buffer)
 (define-key evil-normal-state-map (kbd "SPC b n") 'next-buffer)
 (define-key evil-normal-state-map (kbd "SPC b p") 'previous-buffer)
-(define-key evil-normal-state-map (kbd "SPC b l") 'ibuffer-list-buffers)
+(define-key evil-normal-state-map (kbd "SPC b l") 'helm-buffers-list)
 (define-key evil-normal-state-map (kbd "SPC TAB") 'evil-switch-to-windows-last-buffer)

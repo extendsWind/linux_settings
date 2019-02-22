@@ -88,10 +88,10 @@ deploy_settings(){
             fi
 		}
 
-    if [ -h  /etc/shadowsocks/config.json ]; then
-        sudo rm /etc/shadowsocks/config.json
-    fi
-    sudo ln -s $configDir/ss/config.json /etc/shadowsocks/config.json
+#    if [ -h  /etc/shadowsocks/config.json ]; then
+#        sudo rm /etc/shadowsocks/config.json
+#    fi
+#    sudo ln -s $configDir/ss/config.json /etc/shadowsocks/config.json
 
 }
 

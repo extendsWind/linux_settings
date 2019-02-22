@@ -1,17 +1,16 @@
 -- Depandency
---  icon in Arc-Maia
---  xtrlock for screen lock
---  xfce4-terminal
---  j4-dmenu for quick application search
---  caja (mate file manager)
---  editor vim (optional, not important)
+--  icon in Arc-Maia (optional, used for exit menu)
+--  xtrlock for screen lock (optional, for lock the screen)
+--  j4-dmenu for quick application search (important for start x-application)
+--  and blow software
 
--- This is used later as the default terminal and editor to run.
-terminal = os.getenv("TERMINAL") or "xfce4-terminal"
-editor = os.getenv("EDITOR") or "vim"
+--(important for running terminal)
+terminal = os.getenv("TERMINAL") or "xfce4-terminal" 
+editor = os.getenv("EDITOR") or "nvim"
+file_manager = "dolphin"
+
+
 editor_cmd = terminal .. " -e " .. editor
-file_manager = "caja"
-
 
 -- Standard awesome library
 local gears = require("gears")
@@ -67,15 +66,19 @@ beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 
 ---------------------------------------
 -- my theme settings 
-beautiful.bg_normal = "#000000ff"
-beautiful.bg_systray = "#000000ff"
+beautiful.bg_normal = "#00000000"
+beautiful.bg_systray = "#000000"
+
+-- beautiful.taglist_font = "Noto Sans 8"
+
 
 beautiful.border_width = 0
-beautiful.systray_icon_spacing = 1
+beautiful.systray_icon_spacing = 2
 beautiful.tasklist_disable_task_name = true
 beautiful.tasklist_align = "center"
 beautiful.wibar_height = 18
 beautiful.wallpaper = awful.util.get_configuration_dir() .. "wallpaper1.jpg"
+beautiful.newAwesomeIcon = awful.util.get_configuration_dir() .. "awesome-icon.png"
 --beautiful.tasklist_plain_task_name = true
 
 ---------------------------------------
@@ -128,8 +131,8 @@ end
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
-   { "manual", terminal .. " -e man awesome" }, -- TODO
-   { "edit config", editor_cmd .. " " .. awesome.conffile }, --TODO
+--   { "manual", terminal .. " -e man awesome" }, 
+   { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end}
 }
@@ -160,13 +163,13 @@ myexitmenu= {
 --})
 
 mymainmenu = awful.menu({ items = {
-    { "awesome", myawesomemenu, beautiful.awesome_icon },
+    { "awesome", myawesomemenu, beautiful.newAwesomeIcon},
     { "lock", "xtrlock"},
     { "open terminal", terminal },
     { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
 }})
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu})
+mylauncher = awful.widget.launcher({ image = beautiful.newAwesomeIcon, menu = mymainmenu})
 
 
 -- Menubar configuration
@@ -274,12 +277,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox 底部状态栏
     s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
-    
-    
 
-    -- system tray
+    -- system tray 右下角图标
     s.mySystray = wibox.widget.systray()
-    s.mySystray:set_base_size(17)
+    -- s.mySystray:set_base_size(10)
     
 
     blue        = "#9EBABA"
@@ -463,7 +464,11 @@ clientkeys = awful.util.table.join(
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
+
+    awful.key({ modkey, "Shift" }, "o",      function (c) c:move_to_screen()    awful.screen.focus_relative(-1) end ,
+              {description = "move to other screen without move focus", group = "MySettings-Screen"}),
+
+	          awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -582,7 +587,7 @@ root.keys(globalkeys)
 -- {{{ Rules
 --
 
--- for wine TIM and QQ
+---- for wine TIM and QQ
 local old_filter = awful.client.focus.filter
 function myfocus_filter(c)
   if old_filter(c) then
@@ -668,9 +673,11 @@ awful.rules.rules = {
     
     -- my rules
     --
-    { rule = {class = "Wine"}, 
-      except = {name = "CAJViewer 7.2"},
-      properties = {floating = true; sticky = true} },
+    
+ { rule = {class = "Wine"}, 
+   except = {name = "CAJViewer 7.2"},
+   properties = {floating = true; sticky = true} },
+
 --    {
 --      rule = {class = "Wine"},
 --      except = {name = "?*"},
@@ -683,7 +690,7 @@ awful.rules.rules = {
 --      -- 解决qq选表情的闪退问题
 --    },
 --    {--wine
---      rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
+--     rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
 --    },
 --    {-- 快捷键输入表情
 --      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
@@ -733,7 +740,7 @@ awful.rules.rules = {
     end
 },
     {--browser
-      rule_any = {class = {"Vivaldi", "Firefox", "Chrome"}}, properties = {tag = "2"}
+      rule_any = {class = {"Vivaldi", "Firefox", "Chrome", "Browser360-beta"}}, properties = {tag = "2"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},
@@ -831,11 +838,9 @@ awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 
 --os.execute("pomodoro")
 --os.execute("emacs &")
---
---
---
---
---
+
+
+
 --Name	Description
 --Mod4	Also called Super, Windows and Command ⌘
 --Mod1	Usually called Alt on PCs and Option on Macs

@@ -2,6 +2,6 @@
 
 pulseaudio -D
 emacs &
-vivaldi-stable &
+browser360-beta &
 /opt/deepinwine/apps/Deepin-TIM/run.sh &
 pomodoro &

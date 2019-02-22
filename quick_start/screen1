@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+xrandr --output VGA1 --mode 1440x900 --rate 75 --primary
