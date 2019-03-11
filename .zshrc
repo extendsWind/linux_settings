@@ -106,10 +106,10 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 alias ssh0="ssh sparkl@tdh1 -C -Y"
-alias ssh1="ssh root@tdh1 -C -Y"
-alias ssh2="ssh root@tdh2 -C -Y"
-alias ssh3="ssh root@tdh3 -C -Y"
-alias ssh4="ssh root@tdh4 -C -Y"
+alias ssh1="ssh dp@tdh1 -C -Y"
+alias ssh2="ssh dp@tdh2 -C -Y"
+alias ssh3="ssh dp@tdh3 -C -Y"
+alias ssh4="ssh dp@tdh4 -C -Y"
 alias sshss="ssh fly@23.105.219.71  -p 28979"
 
 alias cp="cp -i"

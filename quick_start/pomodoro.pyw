@@ -1,19 +1,16 @@
 #!/bin/python
 
 import tkinter
-
-
+import datetime  # for log
 """
 # TODO  list:
 - [x] change icon. problem in tkinter, change to remove the icon
 - [x] function packing
-- generate a usage record
+- [ ] generate a usage record
 """
 # thinter init
 root = tkinter.Tk()
 screenWidth, screenHeight = root.maxsize()
-
-
 """
 input parameters by user -----
 """
@@ -21,17 +18,18 @@ input parameters by user -----
 workTime = 25
 restTime = 5
 
+logFilename = "pomodoro.log"
+
 # window size
 windowWidth = 100
 windowHeight = 40
 windowX = 10
-windowY = screenHeight-60
-
-
+windowY = screenHeight - 60
 """
-input parameters by user ----- End 
+input parameters by user ----- End
 """
 
+logFile = open(logFilename, 'a+')
 
 # better to use gif image
 # clock_icon_file = "clock.gif"
@@ -76,6 +74,12 @@ def update_label(label1):
         isStopped = True
         label1["background"] = "#33FF00"
 
+        if isWork is False:  # if stop from work mode
+            logFile.write(str(datetime.datetime.now()) + " ")
+            logFile.write(entry1.get())
+            logFile.write("\n")
+            logFile.flush()
+
 
 # click the label for switch the working mode
 def label_click(event):
@@ -101,30 +105,33 @@ def label_click(event):
         tSec = 0
         set_label_time(label)
 
+        # give a mark if the pomodoro time is broken by click
+        if isWork is True:
+            logFile.write("p- ")
+
 
 if __name__ == "__main__":
 
     # set the icon
-#    img = tkinter.PhotoImage(file=clock_icon_file)
-#    root.tk.call('wm', 'iconphoto', root._w, img)
+    #    img = tkinter.PhotoImage(file=clock_icon_file)
+    #    root.tk.call('wm', 'iconphoto', root._w, img)
 
-    win_size = "{:d}x{:d}+{:d}+{:d}".format(windowWidth, windowHeight, windowX, windowY)
+    win_size = "{:d}x{:d}+{:d}+{:d}".format(windowWidth, windowHeight,
+                                            windowX, windowY)
     root.geometry(win_size)
     root.wm_attributes("-topmost", 1)  # always on top
     root.title(" ")
 
-    label1 = tkinter.Label(text="{:d} : 0{:d}".format
-                           (tMin, tSec))
-#                           (tMin, tSec), height=10, width=15)
+    label1 = tkinter.Label(text="{:d} : 0{:d}".format(tMin, tSec))
+    #                           (tMin, tSec), height=10, width=15)
 
-#    label1.grid(row=0, column=0, padx=1, pady=1)
+    #    label1.grid(row=0, column=0, padx=1, pady=1)
     label1.pack()
     label1.bind("<Button-1>", label_click)
 
     entry1 = tkinter.Entry(root)
-#    entry1.grid(row=1, column=0, padx=1, pady=1)
+    #    entry1.grid(row=1, column=0, padx=1, pady=1)
     entry1.pack()
-
 
     # start timer
     label1.after(1000, update_label, label1)

@@ -28,11 +28,15 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+-- my notification settings
+naughty.config.defaults.timeout = 10
+
 -- Freedesktop menu
--- removed for needing additional library
+-- removed for needing additional library and seldom use
 --local freedesktop = require("freedesktop")
 
--- local lain = require("lain")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -66,7 +70,7 @@ beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 
 ---------------------------------------
 -- my theme settings 
-beautiful.bg_normal = "#00000000"
+beautiful.bg_normal = "#000000"  -- #00000000 透明
 beautiful.bg_systray = "#000000"
 
 -- beautiful.taglist_font = "Noto Sans 8"
@@ -80,6 +84,9 @@ beautiful.wibar_height = 18
 beautiful.wallpaper = awful.util.get_configuration_dir() .. "wallpaper1.jpg"
 beautiful.newAwesomeIcon = awful.util.get_configuration_dir() .. "awesome-icon.png"
 --beautiful.tasklist_plain_task_name = true
+--
+--
+
 
 ---------------------------------------
 
@@ -431,7 +438,7 @@ globalkeys = awful.util.table.join(
     awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "TIM/QQ screenshot", group = "MySettings"}),
-    awful.key({ modkey }, "e", function() awful.spawn(file_manager .. " " .. os.getenv("HOME")) end, {description = "open file explorer", group = "MySettings"}),
+    awful.key({ modkey }, "e", function() awful.spawn(file_manager .. " /home/fly/public_download") end, {description = "open file explorer", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
     awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
 

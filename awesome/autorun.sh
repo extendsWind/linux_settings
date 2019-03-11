@@ -8,7 +8,7 @@ function run {
   fi
 }
 
-run nm-applet # for network manger system tray
+# run nm-applet # for network manger system tray | not used much
 # run dbus-launch update-checker
 run light-locker # lock the screen when suspend
 run compton --shadow-exclude '!focused'
