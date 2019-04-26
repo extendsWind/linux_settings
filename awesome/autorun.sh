@@ -15,6 +15,7 @@ run compton --shadow-exclude '!focused'
 # run /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 # for privilige management??
 # run thunar --daemon
 # run xrdb merge ~/.Xresources # Load a x resource file, and merge with the current settings, not well for python tk
+
 # run xfsettingsd # for xfce4
 # run gnome-keyring-daemon
 # run urxvtd # command not found
