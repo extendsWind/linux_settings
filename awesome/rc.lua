@@ -7,7 +7,7 @@
 --(important for running terminal)
 terminal = os.getenv("TERMINAL") or "xfce4-terminal" 
 editor = os.getenv("EDITOR") or "nvim"
-file_manager = "dolphin"
+file_manager = "nemo"
 
 
 editor_cmd = terminal .. " -e " .. editor
@@ -257,8 +257,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     local names = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
-    local layouts = { l.tile, l.floating, l.tile, l.max, l.max,
-    l.floating, l.tile.left, l.floating, l.floating }
+    local layouts = { l.tile, l.floating, l.tile, l.float, l.tile,
+    l.tile, l.tile.left, l.tile, l.tile}
     awful.tag(names, s, layouts)
 
     -- Create a promptbox for each screen
@@ -359,10 +359,6 @@ globalkeys = awful.util.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
-              {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
-              {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
@@ -373,6 +369,12 @@ globalkeys = awful.util.table.join(
             end
         end,
         {description = "go back", group = "client"}),
+
+
+    -- screen
+    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end, {description = "focus the next screen", group = "screen"}),
+    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end, {description = "focus the previous screen", group = "screen"}),
+
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -438,7 +440,8 @@ globalkeys = awful.util.table.join(
     awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "TIM/QQ screenshot", group = "MySettings"}),
-    awful.key({ modkey }, "e", function() awful.spawn(file_manager .. " /home/fly/public_download") end, {description = "open file explorer", group = "MySettings"}),
+    awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_download")
+	     end, {description = "open file manager", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
     awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
 
@@ -474,8 +477,9 @@ clientkeys = awful.util.table.join(
 
     awful.key({ modkey, "Shift" }, "o",      function (c) c:move_to_screen()    awful.screen.focus_relative(-1) end ,
               {description = "move to other screen without move focus", group = "MySettings-Screen"}),
+    awful.key({ "Mod1" }, "Escape", function () awful.screen.focus_relative(-1) end, {description = "focus the previous screen", group = "MySettings-Screen"}),
 
-	          awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
+    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -505,6 +509,16 @@ clientkeys = awful.util.table.join(
 
         -- MySettings-client
     awful.key({ "Mod1"}, "F4", function (c) c:kill() end, {description = "close", group = "MySettings-client"}),
+    awful.key({ "Mod1",           }, "Tab",
+        function ()
+            awful.client.focus.history.previous()
+            if client.focus then
+                client.focus:raise()
+            end
+        end,
+        {description = "window go back", group = "MySettings-client"}),
+
+
     
     awful.key({ modkey , "Mod1" }, "h", 
     function (c) 
@@ -516,6 +530,7 @@ clientkeys = awful.util.table.join(
       end
     end, 
     {description = "left move window", group = "MySettings-client"}),
+
 
     awful.key({ modkey , "Mod1" }, "l", 
     function (c) 
@@ -659,7 +674,8 @@ awful.rules.rules = {
           "Wpa_gui",
           "pinentry",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+	  "inkscape"},
 
         name = {
           "Event Tester",  -- xev.

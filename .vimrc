@@ -51,6 +51,10 @@ let g:deoplete#enable_at_startup = 1
 
 set mouse=v  " mouse mode just in visual mode
 
+set ts=2
+set expandtab
+set autoindent
+
 
 imap <C-f> <Right>
 imap <C-p> <Up>

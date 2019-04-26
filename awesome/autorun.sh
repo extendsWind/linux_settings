@@ -28,13 +28,16 @@ run nutstore
 # run xx-net
 # run /usr/lib/gsd-xsettings
 # run xfsettingsd
-run /usr/lib/cinnamon-settings-daemon/csd-xsettings  # for deepin wine
+# run /usr/lib/cinnamon-settings-daemon/csd-xsettings  # for deepin wine
 
 
 run "sslocal -c /etc/shadowsocks/config.json"
 run klipper
 
 run screen1   # xrand setting for rate
+
+run /usr/lib/polkit-kde-authentication-agent-1  # for root grant in GUI
+
 
 
 # 关闭屏幕保护和省电模式

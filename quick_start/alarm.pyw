@@ -1,10 +1,11 @@
 #!/bin/python3
 
+# just a test program for py gtk
+
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import Gdk
-import gi
 
 
 class MyWindow(Gtk.Window):
