@@ -443,7 +443,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_download")
 	     end, {description = "open file manager", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
-    awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+    awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "screen lock", group = "MySettings"}),
 
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
 --    awful.key({ modkey}, "]", function() awful.spawn("python /home/fly/.config/awesome/keydown.py ") end, {description = "move up", group = "MySettings"}),
@@ -770,7 +770,7 @@ awful.rules.rules = {
     end
 },
     {--browser
-      rule_any = {class = {"Vivaldi", "Firefox", "Chrome", "Browser360-beta"}}, properties = {tag = "2"}
+      rule_any = {class = {"Vivaldi", "Firefox", "Chrome", "Chromium", "Browser360-beta"}}, properties = {tag = "2"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},

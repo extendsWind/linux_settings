@@ -1,0 +1,10 @@
+#!/bin/bash
+
+currentDir=$(cd "$(dirname "$0")";pwd)
+
+export serverPath=$(cat $currentDir/my_program_path)/anki_server
+echo $serverPath
+
+cd $serverPath
+
+python -m ankisyncd

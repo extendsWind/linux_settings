@@ -9,24 +9,26 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-git'
 Plug 'othree/html5.vim'
 Plug 'tpope/vim-markdown'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'hail2u/vim-css3-syntax'
+" Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
+" Plug 'hail2u/vim-css3-syntax'
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 Plug 'w0rp/ale'
+Plug 'justmao945/vim-clang'
 
-" if has('nvim')
-"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+endif
 " else
 "   Plug 'Shougo/deoplete.nvim'
 "   Plug 'roxma/nvim-yarp'
 "   Plug 'roxma/vim-hug-neovim-rpc'
 " endif
 
-Plug 'wokalski/autocomplete-flow'
+" Plug 'wokalski/autocomplete-flow'
 " You will also need the following for function argument completion:
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
 
 
 " python
@@ -63,3 +65,5 @@ imap <C-b> <Left>
 imap <C-e> <End>
 imap <C-a> <Home>
 imap <C-d> <Delete>
+imap <M-f> <C-Right>
+imap <M-b> <C-Left>

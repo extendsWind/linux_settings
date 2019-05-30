@@ -1,6 +1,7 @@
 #!/bin/bash
 
 emacs &
-firefox &
+chromium &
 /opt/deepinwine/apps/Deepin-TIM/run.sh &
-pomodoro &
+awesome-client 'awesome.restart()'
+#pomodoro &
