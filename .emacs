@@ -56,7 +56,7 @@
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
  '(package-selected-packages
    (quote
-    (org-pomodoro spacemacs-theme elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
+    (markdown-toc org-pomodoro spacemacs-theme elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
  '(spacemacs-theme-custom-colors (quote ((base . "#ffffff"))))
  '(tool-bar-mode nil))
 
@@ -204,6 +204,9 @@
 
 ;; ### for org-mode and org-ref
 
+;; #### org indent mode
+(add-hook 'org-mode-hook 'org-indent-mode)
+
 ;; #### for agenda
 (setq org-agenda-files (list "~/todo.org"))
 
@@ -214,6 +217,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)))
+(setq org-confirm-babel-evaluate nil)
 
 
 ;; #### org capture
@@ -407,8 +411,8 @@
 
 
 ;; ### browse-file-directory
-(defun browse-file-directory ()
-  "Open the current file's directory however the OS would."
+(defun open-file-directory ()
+  "Open the current file's directory by system file explorer"
   (interactive)
   (if default-directory (browse-url-of-file (expand-file-name default-directory))
     (error

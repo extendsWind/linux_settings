@@ -715,9 +715,9 @@ awful.rules.rules = {
 --    {--wine
 --     rule = {class = "Wine", name="?*"}, properties = {focusable = true, floating = true, sticky = true}
 --    },
---    {-- 快捷键输入表情
---      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
---    },
+    {-- 快捷键输入表情
+      rule = {class= "Wine", name="FaceSelector"}, properties = {focusable = false, floating = true, sticky = true}
+    },
     {-- Golden Dict
       rule_any = {
         class = {

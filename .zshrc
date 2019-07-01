@@ -105,19 +105,18 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # ssh
-alias ssh0="ssh sparkl@tdh1 -C -Y"
-alias ssh1="ssh dp@tdh1 -C -Y"
-alias ssh2="ssh dp@tdh2 -C -Y"
-alias ssh3="ssh dp@tdh3 -C -Y"
-alias ssh4="ssh dp@tdh4 -C -Y"
-alias sshss="ssh fly@23.105.219.71  -p 28979"
+alias ssh1="ssh sparkl@tdh1 -C -Y"
+alias ssh2="ssh sparkl@tdh2 -C -Y"
+alias ssh3="ssh sparkl@tdh3 -C -Y"
+alias ssh4="ssh sparkl@tdh4 -C -Y"
+alias sshss="ssh fly@ssserver -p 28979"
+alias sshandroid="ssh user@192.168.3.18 -p 8022"
 
 alias cp="cp -i"
 alias mv="mv -i"
 
-alias sslocal="sslocal -c /etc/shadowsocks/config.json"
-alias sshandroid="ssh user@192.168.3.18 -p 8022"
 
+alias sslocal="sslocal -c /etc/shadowsocks/config.json"
 
 alias vim=nvim
 
