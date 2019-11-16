@@ -6,7 +6,7 @@ import datetime  # for log
 # TODO  list:
 - [x] change icon. problem in tkinter, change to remove the icon
 - [x] function packing
-- [ ] generate a usage record
+- [x] generate a usage record
 """
 # thinter init
 root = tkinter.Tk()
@@ -15,7 +15,7 @@ screenWidth, screenHeight = root.maxsize()
 input parameters by user -----
 """
 # pomodoro
-workTime = 25
+workTime = 20
 restTime = 5
 
 logFilename = "pomodoro.log"
@@ -108,6 +108,8 @@ def label_click(event):
         # give a mark if the pomodoro time is broken by click
         if isWork is True:
             logFile.write("p- ")
+        else:
+            logFile.write("p  ")
 
 
 if __name__ == "__main__":

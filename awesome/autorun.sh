@@ -8,7 +8,7 @@ function run {
   fi
 }
 
-# run nm-applet # for network manger system tray | not used much
+run nm-applet # for network manger system tray | not used much
 # run dbus-launch update-checker
 run light-locker # lock the screen when suspend
 run compton --shadow-exclude '!focused'
@@ -32,7 +32,9 @@ run nutstore
 # run /usr/lib/cinnamon-settings-daemon/csd-xsettings  # for deepin wine
 
 
-run "sslocal -c /etc/shadowsocks/config.json"
+# run "sslocal -c /etc/shadowsocksr/config.json"
+run "/home/fly/linux_program/v2ray/v2ray -config /etc/v2ray/config.json"
+
 run klipper
 
 run screen1   # xrand setting for rate

@@ -1,7 +1,13 @@
 #!/bin/bash
 
 emacs &
-chromium &
+firefox &
 /opt/deepinwine/apps/Deepin-TIM/run.sh &
-awesome-client 'awesome.restart()'
+awesome-client 'awesome.restart()'  &
+sh -c "redshift-gtk -l manual:lat=32:lon=114 -t 4000:4000" &
+
+
+
+
+
 #pomodoro &

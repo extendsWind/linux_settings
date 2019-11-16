@@ -7,9 +7,11 @@
 ;; You may delete these explanatory comments.
 ;;; Code:
 
+
+;; coding system for Chinese: M-x revert-buffer-with-coding-system
+
 ;; emacs -q -l ~/.emacs_alone
 
-(package-initialize)
 
 (setq gc-cons-threshold 100000000) ;; reduce the startup time
 
@@ -30,7 +32,7 @@
 (unless package-archive-contents (package-refresh-contents))
 
 
-;; ### for package install  not test
+;; ### for package install  
 (setq package-list '(better-defaults spacemacs-theme evil dumb-jump
 				     company python-mode neotree
 				     flycheck markdown-mode flymd elpy undo-tree helm which-key use-package
@@ -47,16 +49,40 @@
 
 
 
+  
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#ffffff"])
  '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
+ '(custom-safe-themes
+   (quote
+    ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" default)))
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX+" . "#dc752f")
+     ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (markdown-toc org-pomodoro spacemacs-theme elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
+    (2048-game spacemacs-theme markdown-toc org-pomodoro elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
+ '(pdf-view-midnight-colors (quote ("#ffffff" . "#292b2e")))
  '(spacemacs-theme-custom-colors (quote ((base . "#ffffff"))))
  '(tool-bar-mode nil))
 
@@ -64,14 +90,27 @@
 ;; emms not used default
 ;; using theme "molokai"
 
-
+(provide '.emacs)
+;;; .emacs ends here
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "文泉驿等宽微米黑" :foundry "WQYF" :slant normal :weight normal :height 108 :width normal)))))
 
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;;                     charset (font-spec :family "cascadia" :size 15)))
+
+
+
+;;(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+;; '(default ((t (:family "Droid Sans Mono" :foundry "1ASC" :slant normal :weight normal :height 113 :width normal)))))
 
 
 
@@ -83,11 +122,12 @@
 (load-theme 'spacemacs-dark t)		 ;; load material theme, using
 (global-linum-mode t)		 ;; enable line numbers globally
 
-(global-visual-line-mode t)  ;; not break a word
+;; (global-visual-line-mode nil)  ;; not break a word
 
 (fset 'yes-or-no-p 'y-or-n-p)  ;; change yes-or-no to y-or-n
 
 (save-place-mode 1)  ;; restore file position after re-openning files
+
 
 ;;(require 'session)
 ;;(add-hook 'after-init-hook 'session-initialize)
@@ -99,11 +139,11 @@
 ;; ### setting the font
 
 ;; default font setting
-;;(set-frame-font "Microsoft Yahei 10" nil t)
+;; (set-frame-font "Microsoft Yahei 10" nil t)
 
-(add-to-list 'default-frame-alist '(font . "Droid Sans Mono-11" ))
-(set-face-attribute 'default t
-		    :font "Droid Sans Mono-11" )
+;; (add-to-list 'default-frame-alist '(font . "Droid Sans Mono-11" ))
+;; (set-face-attribute 'default t
+;;		    :font "Droid Sans Mono-11" )
 
 
 ;;;中文与英文字体设置
@@ -204,8 +244,18 @@
 
 ;; ### for org-mode and org-ref
 
+;; #### org archive
+;; 配置归档文件的名称和Headline格式
+;; (setq org-archive-location "::* Archived Tasks")
+(setq org-archive-location "::datetree")
+
 ;; #### org indent mode
 (add-hook 'org-mode-hook 'org-indent-mode)
+
+;; #### org line truncate
+(add-hook 'org-mode-hook #'toggle-truncate-lines) 
+
+
 
 ;; #### for agenda
 (setq org-agenda-files (list "~/todo.org"))
@@ -400,7 +450,7 @@
 
 ;; ### coding system setting
 (prefer-coding-system 'utf-8)
-(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
+;;(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
 (set-language-environment 'utf-8)
 (set-keyboard-coding-system 'utf-8-mac) ; For old Carbon emacs on OS X only
 (setq locale-coding-system 'utf-8)
@@ -465,6 +515,3 @@
 ;; c++
 (define-key evil-normal-state-map (kbd "SPC m r") 'compile-and-run-cpp-code)
 
-
-(provide '.emacs)
-;;; .emacs ends here

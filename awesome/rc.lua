@@ -374,6 +374,7 @@ globalkeys = awful.util.table.join(
     -- screen
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end, {description = "focus the next screen", group = "screen"}),
     awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end, {description = "focus the previous screen", group = "screen"}),
+    awful.key({ modkey}, "q", function () awful.screen.focus_relative( 1) end, {description = "focus the next screen", group = "MySettings-Screen"}),
 
 
     -- Standard program
@@ -675,7 +676,8 @@ awful.rules.rules = {
           "pinentry",
           "veromix",
           "xtightvncviewer",
-	  "inkscape"},
+	  "inkscape",
+    "krunner"},
 
         name = {
           "Event Tester",  -- xev.
@@ -700,6 +702,7 @@ awful.rules.rules = {
  { rule = {class = "Wine"}, 
    except = {name = "CAJViewer 7.2"},
    properties = {floating = true; sticky = true} },
+
 
 --    {
 --      rule = {class = "Wine"},
@@ -770,7 +773,7 @@ awful.rules.rules = {
     end
 },
     {--browser
-      rule_any = {class = {"Vivaldi", "Firefox", "Chrome", "Chromium", "Browser360-beta"}}, properties = {tag = "2"}
+      rule_any = {class = {"firefox", "Vivaldi", "Firefox", "Chrome", "Chromium", "Browser360-beta"}}, properties = {tag = "2"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},
