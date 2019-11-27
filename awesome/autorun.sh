@@ -32,8 +32,8 @@ run nutstore
 # run /usr/lib/cinnamon-settings-daemon/csd-xsettings  # for deepin wine
 
 
-# run "sslocal -c /etc/shadowsocksr/config.json"
-run "/home/fly/linux_program/v2ray/v2ray -config /etc/v2ray/config.json"
+run "sslocal -c /etc/shadowsocksr/config.json"
+# run "/home/fly/linux_program/v2ray/v2ray --config=/etc/v2ray/config.json"
 
 run klipper
 

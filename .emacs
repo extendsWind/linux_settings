@@ -38,6 +38,7 @@
 				     flycheck markdown-mode flymd elpy undo-tree helm which-key use-package
 				     js2-mode xref-js2 company-tern;; js
 				     session ;; for start up
+				     org-ref
 
 				     ;;    ein ;; jupyter-notebook for python
 				     ))
