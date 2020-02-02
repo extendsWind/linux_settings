@@ -17,13 +17,16 @@
 
 (setq gc-cons-threshold 100000000) ;; reduce the startup time
 
+(setq package-check-signature nil)  ;; unknown problem
+
 
 ;;; Commentary:
 ;; 
 
 (require 'package)
 
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+(setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/");; http://elpa.emacs-china.org/gnu/")
+                          ;;http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
 			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 
@@ -35,10 +38,11 @@
 
 
 ;; ### for package install  
-(setq package-list '(better-defaults spacemacs-theme evil dumb-jump
+(setq package-list '(better-defaults spacemacs-theme undo-tree evil dumb-jump
 				     company python-mode neotree
-				     flycheck markdown-mode flymd elpy undo-tree helm which-key use-package
+				     flycheck markdown-mode flymd elpy helm which-key use-package
 				     js2-mode xref-js2 company-tern;; js
+             org-ref
 				     session ;; for start up
 				     org-ref
 				     org-pomodoro
