@@ -1,0 +1,33 @@
+{
+//    "open-in-browser.default": "browser360-beta",
+    "window.zoomLevel": 0,
+    "files.autoSave": "onFocusChange",
+    "editor.tabSize": 2,
+    "update.mode": "manual",
+    "vim.hlsearch": true,
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+
+ 
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+          "before": ["j"],
+          "after": ["g", "j"]
+        },
+        {
+          "before": ["k"],
+          "after": ["g", "k"]
+        }
+        //,
+        //{
+          //"before": ["<C-n>"],
+         // "commands": ["Down"]
+        //}
+    ],
+    "markdown.extension.toc.githubCompatibility": true,
+    "python.dataScience.sendSelectionToInteractiveWindow": true,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false
+
+}

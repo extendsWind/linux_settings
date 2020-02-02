@@ -26,7 +26,12 @@ $myHome/.vimrc
 .
 $myHome/quick_start
 .
+"$myHome/.config/Code - OSS/User/keybindings.json"
+./vscode
+"$myHome/.config/Code - OSS/User/settings.json"
+./vscode
 )
+
 
 # 暂时停用spacemacs，启动速度略慢而且基本用不上太多的功能
 # 如Python c++依赖的简单编写偶尔会出bug略不稳定
@@ -74,16 +79,18 @@ deploy_settings(){
                 # if backup config file exist
                 if [ -f ${fileLists[i+1]} ] || [ -d ${fileLists[i+1]} ]; then
                     # rm the link if exist
-                    if [ -h ${fileLists[i]} ] ; then
-                        rm ${fileLists[i]}
+                    if [ -h "${fileLists[i]}" ] ; then
+                        rm "${fileLists[i]}"
                     fi
                     # backup the file if exist
-                    if [ -f ${fileLists[i]} ] || [ -d ${fileLists[i]} ]; then
-                        mv ${fileLists[i]} ${fileLists[i]}.bak
+                    if [ -f "${fileLists[i]}" ] || [ -d "${fileLists[i]}" ]; then
+                        mv "${fileLists[i]}" "${fileLists[i]}.bak"
                     fi
 
                     lnFile=$(cd "${fileLists[i+1]}";pwd)/${fileLists[i]##*/}
-                    ln -s $lnFile ${fileLists[i]}
+
+                    ln -s "$lnFile" "${fileLists[i]}"
+                    echo create softlink from "$lnFile" to "${fileLists[i]}"
                 fi
             fi
 		}
@@ -92,6 +99,12 @@ deploy_settings(){
 #        sudo rm /etc/shadowsocks/config.json
 #    fi
 #    sudo ln -s $configDir/ss/config.json /etc/shadowsocks/config.json
+
+    if [ -h  /etc/vsftpd.conf ]; then
+        sudo mv /etc/vsftpd.conf /etc/vsftpd.conf.bak
+    fi
+    sudo ln -s $configDir/etc/vsftpd.conf /etc/vsftpd.conf
+
 
 }
 

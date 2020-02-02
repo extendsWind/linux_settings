@@ -173,6 +173,7 @@ mymainmenu = awful.menu({ items = {
     { "awesome", myawesomemenu, beautiful.newAwesomeIcon},
     { "lock", "xtrlock"},
     { "open terminal", terminal },
+    { "run program", "j4-dmenu-desktop"},
     { "Exit", myexitmenu, "/usr/share/icons/Arc-Maia/actions/24@2x/system-restart.png" },
 }})
 
@@ -380,6 +381,9 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ "Control", "Mod1"           }, "t", function () awful.spawn(terminal) end,
+              {description = "open a terminal", group = "launcher"}),
+
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -437,6 +441,7 @@ globalkeys = awful.util.table.join(
     -- my key settings
     --
     --
+    awful.key({"Control", "Mod1"}, "1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
     awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
@@ -510,7 +515,8 @@ clientkeys = awful.util.table.join(
 
         -- MySettings-client
     awful.key({ "Mod1"}, "F4", function (c) c:kill() end, {description = "close", group = "MySettings-client"}),
-    awful.key({ "Mod1",           }, "Tab",
+    awful.key({ "Mod1"}, "c", function (c) c:kill() end, {description = "close", group = "MySettings-client"}),
+    awful.key({ "Mod1"}, "Tab",
         function ()
             awful.client.focus.history.previous()
             if client.focus then

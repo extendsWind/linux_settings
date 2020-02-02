@@ -1,0 +1,67 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+n",
+        "command": "-workbench.action.files.newUntitledFile"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "cursorDown"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "cursorUp"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "cursorRight",
+        "when": "vim.active && vim.mode == 'Insert'"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "cursorLeft",
+        "when": "vim.active && vim.mode == 'Insert'"
+    },
+    {
+        "key": "ctrl+a",
+        "command": "cursorHome",
+        "when": "vim.active && vim.mode == 'Insert'"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "cursorEnd",
+        "when": "vim.active && vim.mode == 'Insert'"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "deleteRight"
+    },
+    {
+        "key": "alt+f",
+        "command": "cursorWordRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+b",
+        "command": "cursorWordLeft",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "j",
+        "command": "gj",
+        "when": "vim.active && vim.mode == 'Ndormal'"
+    }
+    
+    /*,
+    {
+        "key": "ctrl+shift+alt+y ctrl+shift+alt+y",
+        "command": "extension.vim_ctrl+n",
+        "when": "editorTextFocus && vim.active && vim.use<C-n> && !inDebugRepl || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "-extension.vim_ctrl+n",
+        "when": "editorTextFocus && vim.active && vim.use<C-n> && !inDebugRepl || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
+    }
+    */
+]

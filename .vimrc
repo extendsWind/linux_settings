@@ -19,7 +19,6 @@ Plug 'tpope/vim-markdown'
 " Plug 'mxw/vim-jsx'
 " Plug 'hail2u/vim-css3-syntax'
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
-Plug 'w0rp/ale'
 Plug 'justmao945/vim-clang'
 
 if has('nvim')
@@ -37,7 +36,10 @@ endif
 " Plug 'Shougo/neosnippet-snippets'
 
 
-" python
+" ## python
+
+" Plug 'w0rp/ale'   " PEP check for python
+
 Plug 'davidhalter/jedi-vim'
  " python-neovim is needed for neovim
  " Completion <C-Space>
@@ -62,6 +64,7 @@ set mouse=v  " mouse mode just in visual mode
 set ts=2
 set expandtab
 set autoindent
+set nu
 
 
 imap <C-f> <Right>

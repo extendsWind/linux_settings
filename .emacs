@@ -7,6 +7,8 @@
 ;; You may delete these explanatory comments.
 ;;; Code:
 
+;; bug -- Some fonts with global-linum-mode may cause memory leak: Yu Gothic UI Regular(about 300M), 
+
 
 ;; coding system for Chinese: M-x revert-buffer-with-coding-system
 
@@ -39,6 +41,7 @@
 				     js2-mode xref-js2 company-tern;; js
 				     session ;; for start up
 				     org-ref
+				     org-pomodoro
 
 				     ;;    ein ;; jupyter-notebook for python
 				     ))
@@ -50,14 +53,16 @@
 
 
 
-  
+ ;; not show tool bar
+;; emms not used default
+;; using theme "spacemacs-theme"
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#ffffff"])
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
  '(custom-safe-themes
@@ -82,23 +87,28 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (2048-game spacemacs-theme markdown-toc org-pomodoro elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
- '(pdf-view-midnight-colors (quote ("#ffffff" . "#292b2e")))
- '(spacemacs-theme-custom-colors (quote ((base . "#ffffff"))))
+    (ox-pandoc 2048-game spacemacs-theme markdown-toc org-pomodoro elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
+ '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
  '(tool-bar-mode nil))
 
-;; not show tool bar
-;; emms not used default
-;; using theme "molokai"
 
-(provide '.emacs)
-;;; .emacs ends here
-(custom-set-faces
+;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "文泉驿等宽微米黑" :foundry "WQYF" :slant normal :weight normal :height 108 :width normal)))))
+;; '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 120 :width normal)))))
+
+
+
+;; (provide '.emacs)
+;;; .emacs ends here
+;;(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+;; '(default ((t (:family "文泉驿等宽微米黑" :foundry "WQYF" :slant normal :weight normal :height 108 :width normal)))))
 
 ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
 ;;   (set-fontset-font (frame-parameter nil 'font)
@@ -133,7 +143,7 @@
 ;;(require 'session)
 ;;(add-hook 'after-init-hook 'session-initialize)
 
-;; (toggle-frame-maximized) ;; startup maximize
+(toggle-frame-maximized) ;; startup maximize to screen
 
 
 
@@ -226,7 +236,7 @@
       (progn
 	(defvar pandoc-str (concat
 			    "pandoc --pdf-engine=xelatex "
-			    ;;"-V CJKmainfont=SimSong "
+			    "-V CJKmainfont=simsun "
 			    ;;"-V geometry:\"top=2cm, bottom=1.5cm, left=1cm, right=1cm\" "
 			    "-o "
 			    (file-name-base (buffer-file-name))
@@ -304,14 +314,20 @@
 (setq bibtex-completion-bibliography
       '("mybib.bib"))
 
+;; #### org-export-latex
 ;; will export a random label and cause wrong if not set
 (setq org-latex-prefer-user-labels t)
 
 (setq org-latex-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
 	"bibtex %b"
-	"pdflatex -interaction nonstopmode -output-directory %o %f"
-	"pdflatex -interaction nonstopmode -output-directory %o %f"))
+	"xelatex -interaction nonstopmode -output-directory %o %f"
+	"xelatex -interaction nonstopmode -output-directory %o %f"))
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+               '("svjour3")))
+
 
 (defun pandoc-export-to-docx()
   "Convert org or markdown file to doc by pandoc."
@@ -515,4 +531,9 @@
 
 ;; c++
 (define-key evil-normal-state-map (kbd "SPC m r") 'compile-and-run-cpp-code)
-
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
