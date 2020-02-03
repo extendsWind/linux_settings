@@ -1,17 +1,59 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
+    /*
+    取消快捷键
     {
         "key": "ctrl+n",
         "command": "-workbench.action.files.newUntitledFile"
-    },
+    }, */
+
+    /*  vim相关快捷键设置某些情况下可能需要下面的条件
+    {
+      "key": "k",
+      "command": "cursorUp",
+      "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal' && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
+    }
+    */
+
+    /* for editor and terminal */
     {
         "key": "ctrl+n",
-        "command": "cursorDown"
+        "command": "cursorDown",
+        "when": "vim.active || terminalFocus"
     },
     {
         "key": "ctrl+p",
-        "command": "cursorUp"
+        "command": "cursorUp",
+        "when": "vim.active || terminalFocus"
     },
+    {
+        "key": "ctrl+a",
+        "command": "cursorHome",
+        "when": "vim.active || terminalFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "cursorEnd",
+        "when": "vim.active || terminalFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "deleteRight",
+        "when": "vim.active || terminalFocus"
+    },
+    {
+        "key": "alt+f",
+        "command": "cursorWordRight",
+        "when": "vim.active || terminalFocus"
+    },
+    {
+        "key": "alt+b",
+        "command": "cursorWordLeft",
+        "when": "vim.active || terminalFocus"
+    },
+
+
+    /* for vim insert mode only*/
     {
         "key": "ctrl+f",
         "command": "cursorRight",
@@ -22,46 +64,28 @@
         "command": "cursorLeft",
         "when": "vim.active && vim.mode == 'Insert'"
     },
-    {
-        "key": "ctrl+a",
-        "command": "cursorHome",
-        "when": "vim.active && vim.mode == 'Insert'"
-    },
-    {
-        "key": "ctrl+e",
-        "command": "cursorEnd",
-        "when": "vim.active && vim.mode == 'Insert'"
-    },
-    {
-        "key": "ctrl+d",
-        "command": "deleteRight"
-    },
-    {
-        "key": "alt+f",
-        "command": "cursorWordRight",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "alt+b",
-        "command": "cursorWordLeft",
-        "when": "editorTextFocus"
-    },
+
+    /* for vi normal mode only */
     {
         "key": "j",
-        "command": "gj",
-        "when": "vim.active && vim.mode == 'Ndormal'"
-    }
-    
-    /*,
-    {
-        "key": "ctrl+shift+alt+y ctrl+shift+alt+y",
-        "command": "extension.vim_ctrl+n",
-        "when": "editorTextFocus && vim.active && vim.use<C-n> && !inDebugRepl || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
+        "command": "cursorDown",
+        "when": "vim.active && vim.mode == 'Normal'"
     },
     {
-        "key": "ctrl+n",
-        "command": "-extension.vim_ctrl+n",
-        "when": "editorTextFocus && vim.active && vim.use<C-n> && !inDebugRepl || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-n> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
+        "key": "k",
+        "command": "cursorUp",
+        "when": "vim.active && vim.mode == 'Normal'"
+    },
+
+    /* terminal */
+    {
+        "key": "ctrl+f",
+        "command": "cursorRight",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "cursorLeft",
+        "when": "terminalFocus"
     }
-    */
 ]
