@@ -36,11 +36,12 @@ run "sslocal -c /etc/shadowsocksr/config.json"
 # run "/home/fly/linux_program/v2ray/v2ray --config=/etc/v2ray/config.json"
 
 run klipper
-
 run screen1   # xrand setting for rate
-
 run /usr/lib/polkit-kde-authentication-agent-1  # for root grant in GUI
 
+
+run synapse  # instead of j4-dmenu
+run xfsettingsd
 
 
 # 关闭屏幕保护和省电模式
