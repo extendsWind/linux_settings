@@ -8,39 +8,47 @@ function run {
   fi
 }
 
-run nm-applet # for network manger system tray | not used much
-# run dbus-launch update-checker
+# ===== run (only once) processes which spawn with different name
+if (command -v gnome-keyring-daemon && ! pgrep gnome-keyring-d); then
+    gnome-keyring-daemon --daemonize --login &
+fi
+if (command -v start-pulseaudio-x11 && ! pgrep pulseaudio); then
+    start-pulseaudio-x11 &
+fi
+
+
+# run /usr/lib/polkit-kde-authentication-agent-1  # for root grant in GUI
+if (command -v /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 && ! pgrep polkit-mate-aut) ; then
+    /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
+fi
+if (command -v  xfce4-power-manager && ! pgrep xfce4-power-man) ; then
+    xfce4-power-manager &
+fi
+
+
+
+# ===== application daemons
 run light-locker # lock the screen when suspend
-run compton --shadow-exclude '!focused'
-# run /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 # for privilige management??
-# run thunar --daemon
-# run xrdb merge ~/.Xresources # Load a x resource file, and merge with the current settings, not well for python tk
-
-# run xfsettingsd # for xfce4
-# run gnome-keyring-daemon
-# run urxvtd # command not found
-# run pulseaudio -D # audio control, will case a bug of tim to hang
-
+run thunar --daemon
+run compton --shadow-exclude '!focused'  # 窗口透明效果
 run fcitx -r
-# run xfce4-power-manager
+run xfsettingsd # for xfce4
+# run /usr/lib/gsd-xsettings
+# run /usr/lib/cinnamon-settings-daemon/csd-xsettings  # for deepin wine
+run xfce4-power-manager
+
+# ===== applet 右下角
+run pa-applet
+run nm-applet # for network manger system tray | not used much
+run blueman-applet
+
+# ===== some applications
 # run xfce4-clipman
 run nutstore
-# run autokey-gtk
-# run xx-net
-# run /usr/lib/gsd-xsettings
-# run xfsettingsd
-# run /usr/lib/cinnamon-settings-daemon/csd-xsettings  # for deepin wine
-
-
-run "sslocal -c /etc/shadowsocksr/config.json"
+# run "sslocal -c /etc/shadowsocksr/config.json"
 # run "/home/fly/linux_program/v2ray/v2ray --config=/etc/v2ray/config.json"
-
-run klipper
-
-run screen1   # xrand setting for rate
-
-run /usr/lib/polkit-kde-authentication-agent-1  # for root grant in GUI
-
+# run klipper
+# run screen1   # xrand setting for rate
 
 
 # 关闭屏幕保护和省电模式

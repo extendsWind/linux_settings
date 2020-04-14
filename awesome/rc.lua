@@ -1,13 +1,12 @@
 -- Depandency
 --  icon in Arc-Maia (optional, used for exit menu)
 --  xtrlock for screen lock (optional, for lock the screen)
---  j4-dmenu for quick application search (important for start x-application)
---  and blow software
+--  synapse quick application search (important for start x-application)
 
 --(important for running terminal)
 terminal = os.getenv("TERMINAL") or "xfce4-terminal" 
 editor = os.getenv("EDITOR") or "nvim"
-file_manager = "nemo"
+file_manager = "thunar"
 
 
 editor_cmd = terminal .. " -e " .. editor
@@ -443,12 +442,14 @@ globalkeys = awful.util.table.join(
     --
     awful.key({"Control", "Mod1"}, "1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
     awful.key({"Mod1"}, "F1", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
+    awful.key({"Mod1"}, "q", function() awful.spawn("xfce4-terminal --drop-down") end, {description = "terminal drop down", group = "MySettings"}), 
     awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "TIM/QQ screenshot", group = "MySettings"}),
-    awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_download")
+    awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_downloads")
 	     end, {description = "open file manager", group = "MySettings"}),
-    awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+    -- awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
+    awful.key({ modkey }, "r", function() awful.spawn.with_shell ("synapse") end, {description = "synapse app launcher", group = "MySettings"}),
     awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "screen lock", group = "MySettings"}),
 
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
