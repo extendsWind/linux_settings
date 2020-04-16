@@ -45,6 +45,7 @@ run blueman-applet
 # ===== some applications
 # run xfce4-clipman
 run nutstore
+run albert  # app launcher
 # run "sslocal -c /etc/shadowsocksr/config.json"
 # run "/home/fly/linux_program/v2ray/v2ray --config=/etc/v2ray/config.json"
 # run klipper

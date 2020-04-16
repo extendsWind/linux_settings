@@ -1,7 +1,7 @@
 -- Depandency
 --  icon in Arc-Maia (optional, used for exit menu)
 --  xtrlock for screen lock (optional, for lock the screen)
---  synapse quick application search (important for start x-application)
+--  albert quick application search (important for start x-application)
 
 --(important for running terminal)
 terminal = os.getenv("TERMINAL") or "xfce4-terminal" 
@@ -449,7 +449,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_downloads")
 	     end, {description = "open file manager", group = "MySettings"}),
     -- awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
-    awful.key({ modkey }, "r", function() awful.spawn.with_shell ("synapse") end, {description = "synapse app launcher", group = "MySettings"}),
+    awful.key({ modkey }, "r", function() awful.spawn.with_shell ("albert --show") end, {description = "app launcher", group = "MySettings"}),
     awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "screen lock", group = "MySettings"}),
 
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
