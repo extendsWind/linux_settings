@@ -12,7 +12,11 @@ myHome=~
 
 # config file path and backup path
 fileLists=(
+$myHome/.p10k.zsh
+.
 $myHome/.config/i3
+.
+$myHome/.config/trizen/trizen.conf
 .
 $myHome/.config/awesome
 .

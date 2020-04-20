@@ -8,13 +8,24 @@
 
 
     "vim.insertModeKeyBindings": [
-          {
-      "before": ["<C-n>"],
-      "commands": ["cursorDown"]
-    },
+        {
+            "before": ["<C-n>"],
+            "commands": ["cursorDown"]
+        },
         {
             "before": ["<C-p>"],
             "commands": ["cursorUp"]
         }
-    ]
+    ],
+
+    "vim.normalModeKeyBindings": [
+        {
+            "before": ["<leader>","w"],
+            "commands": ["workbench.action.files.newUntitledFile"]
+        }
+    ],
+    "editor.fontFamily": "'WenQuanYi Micro Hei Mono','Droid Sans Mono', monospace, 'Droid Sans Fallback'",
+    "zotero.minimizeAfterPicking": true,
+    "vim.leader": "<space>",
+    "window.zoomLevel": 2
 }
