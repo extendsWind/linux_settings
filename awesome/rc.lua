@@ -446,7 +446,7 @@ globalkeys = awful.util.table.join(
     awful.key({"Control", "Mod1"}, "z", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh z") end, {description = "TIM/QQ toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "w", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh WeChat w 4") end, {description = "WeChat toggle", group = "MySettings"}),
     awful.key({"Control", "Mod1"}, "a", function() awful.spawn("/opt/deepinwine/tools/sendkeys.sh a") end, {description = "TIM/QQ screenshot", group = "MySettings"}),
-    awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_downloads")
+    awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_download")
 	     end, {description = "open file manager", group = "MySettings"}),
     -- awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
     awful.key({ modkey }, "r", function() awful.spawn.with_shell ("albert toggle") end, {description = "app launcher", group = "MySettings"}),
@@ -780,7 +780,7 @@ awful.rules.rules = {
     end
 },
     {--browser
-      rule_any = {class = {"firefox", "Vivaldi", "Firefox", "Chrome", "Chromium", "Browser360-beta"}}, properties = {tag = "2"}
+      rule_any = {class = {"firefox", "firefox-developer", "Vivaldi", "Firefox", "Chrome", "Chromium", "Browser360-beta"}}, properties = {tag = "2"}
     },
     {--Master PDF Editor
       rule = {class = "Master PDF Editor"},
@@ -864,6 +864,18 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+tag.connect_signal("property::layout", function(t)
+    local clients = t:clients()
+    for k,c in pairs(clients) do
+        if c.floating or c.first_tag.layout.name == "floating" then
+            awful.titlebar.show(c)
+        else
+            awful.titlebar.hide(c)
+        end
+    end
+end)
+
 -- }}}
 --
 

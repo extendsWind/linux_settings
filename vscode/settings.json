@@ -27,5 +27,15 @@
     "editor.fontFamily": "'WenQuanYi Micro Hei Mono','Droid Sans Mono', monospace, 'Droid Sans Fallback'",
     "zotero.minimizeAfterPicking": true,
     "vim.leader": "<space>",
-    "window.zoomLevel": 2
+    "window.zoomLevel": 1,
+    "python.linting.pylintArgs": [
+        "\"--disable=C,R,W, --enable=unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode\""
+    ],
+    "python.linting.mypyArgs": [
+        "--follow-imports=silent",
+        "--show-column-numbers"
+    ],
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintEnabled": false,
+    "C_Cpp.updateChannel": "Insiders"
 }

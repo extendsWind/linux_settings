@@ -42,11 +42,10 @@
 				     company python-mode neotree
 				     flycheck markdown-mode flymd elpy helm which-key use-package
 				     js2-mode xref-js2 company-tern;; js
-             org-ref
 				     session ;; for start up
 				     org-ref
 				     org-pomodoro
-
+				     pyim ;; input method
 				     ;;    ein ;; jupyter-notebook for python
 				     ))
 
@@ -91,7 +90,7 @@
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (ox-pandoc 2048-game spacemacs-theme markdown-toc org-pomodoro elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
+    (quelpa-use-package pyim ox-pandoc 2048-game spacemacs-theme markdown-toc org-pomodoro elisp-format helm molokai-theme dumb-jump evil auto-complete-c-headers auto-complete python-mode neotree flycheck material-theme better-defaults undo-tree)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
  '(tool-bar-mode nil))
 
@@ -191,6 +190,8 @@
 
 ;; ### evil for vim edit
 (add-to-list 'load-path "~/.emacs.d/evil")
+
+
 (require 'evil)
 (evil-mode 1)
 
@@ -498,6 +499,16 @@
 (define-key evil-normal-state-map (kbd "M-x") 'helm-M-x)
 (define-key evil-insert-state-map (kbd "M-x") 'helm-M-x)
 
+
+;; ### pyim input method 
+(require 'pyim)
+(require 'pyim-basedict) ; 拼音词库设置，五笔用户 *不需要* 此行设置
+(pyim-basedict-enable)   ; 拼音词库，五笔用户 *不需要* 此行设置
+(setq default-input-method "pyim")
+(setq pyim-page-length 9)
+(global-set-key (kbd "C-/") 'toggle-input-method)
+
+
 ;; ### show shortcut
 (require 'which-key)
 (which-key-mode)
@@ -535,9 +546,15 @@
 
 ;; c++
 (define-key evil-normal-state-map (kbd "SPC m r") 'compile-and-run-cpp-code)
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "思源黑体 CN" :foundry "ADBE" :slant normal :weight normal :height 120 :width normal)))))
+
+
+
+;; ### funny things
