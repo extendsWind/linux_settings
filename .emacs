@@ -41,7 +41,7 @@
 (setq package-list '(better-defaults spacemacs-theme undo-tree evil dumb-jump
 				     company python-mode neotree
 				     flycheck markdown-mode flymd elpy helm which-key use-package
-				     js2-mode xref-js2 company-tern;; js
+				     ;; js2-mode xref-js2 company-tern;; js
 				     session ;; for start up
 				     org-ref
 				     org-pomodoro
