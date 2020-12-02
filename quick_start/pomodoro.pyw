@@ -15,7 +15,7 @@ screenWidth, screenHeight = root.maxsize()
 input parameters by user -----
 """
 # pomodoro
-workTime = 20
+workTime = 25
 restTime = 5
 
 logFilename = "pomodoro.log"

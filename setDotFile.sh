@@ -28,6 +28,8 @@ $myHome/.emacs
 .
 $myHome/.vimrc
 .
+$myHome/.config/nvim/init.vim
+.
 $myHome/quick_start
 .
 "$myHome/.config/Code - OSS/User/keybindings.json"

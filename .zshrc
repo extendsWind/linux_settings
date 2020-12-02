@@ -77,7 +77,7 @@ alias ssh1="ssh sparkl@tdh1 -C -Y"
 alias ssh2="ssh sparkl@tdh2 -C -Y"
 alias ssh3="ssh sparkl@tdh3 -C -Y"
 alias ssh4="ssh sparkl@tdh4 -C -Y"
-alias sshss="ssh fly@ssserver -p 8888"
+alias sshss="ssh fly@windserver -p 8888"
 alias sshandroid="ssh user@192.168.3.18 -p 8022"
 
 alias cp="cp -i"
