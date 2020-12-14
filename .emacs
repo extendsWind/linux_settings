@@ -363,6 +363,10 @@
 ;; #### elpy for python
 (elpy-enable)
 
+(add-hook 'python-mode-hook
+  (lambda ()
+    (setq python-indent-offset 4)))
+
 (when
     (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
@@ -403,8 +407,6 @@
 
 
 ;; ### c++ cpp
-
-
 
 (add-hook 'after-init-hook 'global-company-mode)
 

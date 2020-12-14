@@ -2,15 +2,20 @@
 
 import tkinter
 import datetime  # for log
+
 """
 # TODO  list:
 - [x] change icon. problem in tkinter, change to remove the icon
 - [x] function packing
 - [x] generate a usage record
+- [ ] refactor code
+- [ ] adding a remind of every end of pomodoro
 """
+
 # thinter init
 root = tkinter.Tk()
 screenWidth, screenHeight = root.maxsize()
+
 """
 input parameters by user -----
 """
@@ -23,7 +28,7 @@ logFilename = "pomodoro.log"
 # window size
 windowWidth = 100
 windowHeight = 40
-windowX = 10
+windowX = screenWidth - windowWidth
 windowY = screenHeight - 60
 """
 input parameters by user ----- End
