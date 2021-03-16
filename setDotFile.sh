@@ -2,7 +2,7 @@
 
 # get current directory
 configDir=$(cd "$(dirname "$0")";pwd)
-myHome=~
+myHome=$HOME
 
 
 # TODO
@@ -22,14 +22,16 @@ $myHome/.config/awesome
 .
 $myHome/.zshrc
 .
-$myHome/.vimrc.local
-./vim_spf13
 $myHome/.emacs
 .
 $myHome/.vimrc
-.
+./vim
 $myHome/.config/nvim/init.vim
-.
+./vim
+$myHome/.local/share/nvim/site/autoload/plug.vim
+./vim
+$myHome/.vim/autoload/plug.vim
+./vim
 $myHome/quick_start
 .
 "$myHome/.config/Code - OSS/User/keybindings.json"
@@ -38,12 +40,20 @@ $myHome/quick_start
 ./vscode
 )
 
+mkdir -p $myHome/.config/nvim
+mkdir -p $myHome/.local/share/nvim/site/autoload
+mkdir -p $myHome/.vim/autoload
+
 
 # 暂时停用spacemacs，启动速度略慢而且基本用不上太多的功能
 # 如Python c++依赖的简单编写偶尔会出bug略不稳定
 # 对.emacs文件进行了简单的改装，使用自己配置的emacs
 #$myHome/.spacemacs.d 
 #.
+
+# 暂停使用vim spf13，感觉没必要
+# $myHome/.vimrc.local
+# ./vim_spf13
 
 
 # 从系统中获取配置文件
@@ -106,8 +116,11 @@ deploy_settings(){
 #    fi
 #    sudo ln -s $configDir/ss/config.json /etc/shadowsocks/config.json
 
-    if [ -h  /etc/vsftpd.conf ]; then
+    if [ -f  /etc/vsftpd.conf ]; then
         sudo mv /etc/vsftpd.conf /etc/vsftpd.conf.bak
+    fi
+    if [ -L  /etc/vsftpd.conf ]; then
+        sudo rm /etc/vsftpd.conf
     fi
     sudo ln -s $configDir/etc/vsftpd.conf /etc/vsftpd.conf
 
