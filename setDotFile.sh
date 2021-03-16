@@ -44,6 +44,7 @@ mkdir -p $myHome/.config/nvim
 mkdir -p $myHome/.local/share/nvim/site/autoload
 mkdir -p $myHome/.vim/autoload
 
+mkdir -p "$myHome/.config/Code - OSS/User"
 
 # 暂时停用spacemacs，启动速度略慢而且基本用不上太多的功能
 # 如Python c++依赖的简单编写偶尔会出bug略不稳定
