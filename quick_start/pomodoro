@@ -2,4 +2,4 @@
 #cd /run/media/fly/data1/software/Program\ Files\ \(x86\)\ portable/_selfProgram/src/pomodoro
 
 cd "$(dirname "$0")"
-python3 pomodoro.pyw &
+python3 pomodoro_pyqt.pyw &

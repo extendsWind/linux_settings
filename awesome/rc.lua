@@ -449,7 +449,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "e", function() awful.spawn.with_shell(file_manager .. " /home/fly/public_download")
 	     end, {description = "open file manager", group = "MySettings"}),
     -- awful.key({ modkey }, "r", function() awful.spawn.with_shell ("j4-dmenu-desktop") end, {description = "j4-dmenu-desktop", group = "MySettings"}),
-    awful.key({ modkey }, "r", function() awful.spawn.with_shell ("albert toggle") end, {description = "app launcher", group = "MySettings"}),
+    -- awful.key({ modkey }, "r", function() awful.spawn.with_shell ("albert toggle") end, {description = "app launcher", group = "MySettings"}),
     awful.key({modkey}, "F12", function() awful.spawn.with_shell ("xtrlock") end, {description = "screen lock", group = "MySettings"}),
 
 --    awful.key({ modkey}, "[", function() awful.spawn.with_shell("xdotool getactivewindow key --window %1 Down") end, {description = "move down", group = "MySettings"}),
@@ -706,7 +706,7 @@ awful.rules.rules = {
     -- my rules
     --
     
- { rule = {class = "Wine"}, 
+ { rule_any = {class = {"Wine", "wechat.exe", "tim.exe"}}, 
    except = {name = "CAJViewer 7.2"},
    properties = {floating = true; sticky = true} },
 
@@ -770,15 +770,15 @@ awful.rules.rules = {
       end
     }}, 
     {--pomodoro_tk
-      rule_any = {class = {"Tk", "Sticky.py"}}, properties = {floating = true, sticky = true, skip_taskbar=true, focusable=false -- super+j/k will not get the focus
-    }
+      rule_any = {class = {"Tk", "Sticky.py", "Dialog", "pomodoro_pyqt.pyw"}}, properties = {floating = true, sticky = true, skip_taskbar=true, focusable=false -- super+j/k will not get the focus
+      }
     },
-    {--pomodoro_tk
+    {
     rule = {class = "Thunar"},  
     callback = function(c)
         c.maximized = false
     end
-},
+    },
     {--browser
       rule_any = {class = {"firefox", "firefox-developer", "Vivaldi", "Firefox", "Chrome", "Chromium", "Browser360-beta"}}, properties = {tag = "2"}
     },
@@ -791,9 +791,8 @@ awful.rules.rules = {
       end
     },
     {--xfce4-terminal-drop-down
-    rule = {role = "xfce4-terminal-dropdown"},properties = {floating = true, sticky = true}
-
-  }
+      rule = {role = "xfce4-terminal-dropdown"},properties = {floating = true, sticky = true}
+    }
 }
 -- }}}
 

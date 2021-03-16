@@ -35,7 +35,12 @@
         "--follow-imports=silent",
         "--show-column-numbers"
     ],
+
+    "C_Cpp.updateChannel": "Insiders",
     "python.linting.pylintUseMinimalCheckers": false,
-    "python.linting.pylintEnabled": true,
-    "C_Cpp.updateChannel": "Insiders"
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true, 
+    "python.linting.flake8Args": ["--max-line-length=248"],
+    "python.formatting.provider": "yapf",
+    "python.autoUpdateLanguageServer": false
 }

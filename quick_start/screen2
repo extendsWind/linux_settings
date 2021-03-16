@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-xrandr --output VGA1 --mode 1920x1080 --rate 75 --primary --output DVI-I-1-1 --mode 1440x900 --rate 75 --pos 1920x0 --rate 75
+xrandr --output VGA1 --mode 1920x1080 --rate 75 --primary --output DVI-I-1-1 --mode 1440x900 --rate 76 --pos 1920x0

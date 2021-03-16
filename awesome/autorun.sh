@@ -43,9 +43,9 @@ run nm-applet # for network manger system tray | not used much
 run blueman-applet
 
 # ===== some applications
-# run xfce4-clipman
+run xfce4-clipman
 run nutstore
-run albert  # app launcher
+run ulauncher # app launcher
 # run "sslocal -c /etc/shadowsocksr/config.json"
 # run "v2ray -c /home/fly/.config/v2ray/config.json"
 # run klipper

@@ -10,8 +10,8 @@ import datetime  # for log
 - [x] change icon. problem in tkinter, change to remove the icon
 - [x] function packing
 - [x] generate a usage record
-- [ ] refactor code
-- [ ] adding a remind of every end of pomodoro
+- [x] refactor code
+- [x] adding a remind of every end of pomodoro
 """
 
 
@@ -23,7 +23,7 @@ class Status(Enum):
 
 class PomodoroUI:
     """
-    use TK for UI
+    use Tkinter for UI
     """
 
     def __init__(self, workTime, restTime):
@@ -37,12 +37,14 @@ class PomodoroUI:
         tk_root = tkinter.Tk()
         screen_width, screen_height = tk_root.maxsize()
         window_width = 100
-        window_weight = 40
+        window_height = 40
         # window size
-        window_posx = screen_width - window_width
-        window_posy = screen_height - 60
-        win_size = "{:d}x{:d}+{:d}+{:d}".format(window_width, window_weight,
+        window_posx = screen_width - window_width - 10
+        window_posy = screen_height - window_height - 30
+        win_size = "{:d}x{:d}+{:d}+{:d}".format(window_width, window_height,
                                                 window_posx, window_posy)
+#        win_size = "100x40+1600+900"
+        print(win_size)
         tk_root.geometry(win_size)
         tk_root.wm_attributes("-topmost", 1)  # always on top
         tk_root.title(" ")
@@ -72,7 +74,7 @@ class PomodoroUI:
         else:  # time over
             if self.status == Status.WORK:
                 result = tkinter.messagebox.askyesno(title="Work Time Down",
-                                                     message="Have Focued?", icon=None)
+                                                     message="Have Focued?", icon="info")
                 if result:
                     self.log_file.write(str(datetime.datetime.now()) + " p+ ")
                     self.log_file.write(self.todo_entry.get())
@@ -91,7 +93,7 @@ class PomodoroUI:
 
     def label_click(self, event):
         """ invoked when time_label_clicked """
-        # 已经停止，单击开始
+        # timer stopped, click to start
         if self.second == 0 and self.minite == 0:
             if self.status == Status.WORK:
                 self.minite = self.work_time
@@ -100,7 +102,7 @@ class PomodoroUI:
                 self.minite = self.rest_time
                 self.time_label["background"] = "#33FF00"
             self.label_update()
-        # 时间归零停止
+        # stop the timer
         else:
             self.second = 0
             self.minite = 0
